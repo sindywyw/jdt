@@ -13,9 +13,9 @@ import java.util.TreeSet;
 import java.util.Vector;
 
 /**
- * 
+ *
  * This class represents a Delaunay Triangulation. The class was written for a
- * large scale triangulation (1000 - 200,000 vertices). The application main use is 3D surface (terrain) presentation. 
+ * large scale triangulation (1000 - 200,000 vertices). The application main use is 3D surface (terrain) presentation.
  * <br>
  * The class main properties are the following:<br>
  * - fast point location. (O(n^0.5)), practical runtime is often very fast. <br>
@@ -25,20 +25,20 @@ import java.util.Vector;
  * - standard java (1.5 generic) iterators for the vertices and triangles. <br>
  * - smart iterator to only the updated triangles - for terrain simplification <br>
  * <br>
- *  
+ *
  * Testing (done in early 2005): Platform java 1.5.02 windows XP (SP2), AMD laptop 1.6G sempron CPU
  * 512MB RAM. Constructing a triangulation of 100,000 vertices takes ~ 10
  * seconds. point location of 100,000 points on a triangulation of 100,000
  * vertices takes ~ 5 seconds.
- * 
+ *
  * Note: constructing a triangulation with 200,000 vertices and more requires
  * extending java heap size (otherwise an exception will be thrown).<br>
- * 
+ *
  * Bugs: if U find a bug or U have an idea as for how to improve the code,
  * please send me an email to: benmo@ariel.ac.il
- * 
+ *
  * @author Boaz Ben Moshe 5/11/05 <br>
- * The project uses some ideas presented in the VoroGuide project, written by Klasse f?r Kreise (1996-1997), 
+ * The project uses some ideas presented in the VoroGuide project, written by Klasse f?r Kreise (1996-1997),
  * For the original applet see: http://www.pi6.fernuni-hagen.de/GeomLab/VoroGlide/ . <br>
  */
 
@@ -69,6 +69,11 @@ public class Delaunay_Triangulation {
 
 	// the Bounding Box, {{x0,y0,z0} , {x1,y1,z1}}
 	private Point_dt _bb_min, _bb_max;
+
+	/**
+	 * Index for faster point location searches
+	 */
+	private GridIndex gridIndex = null;
 
 	/**
 	 * creates an empty Delaunay Triangulation.
@@ -115,8 +120,8 @@ public class Delaunay_Triangulation {
 	 * x1 y1 z1 <br>
 	 * ... <br>
 	 * xn yn zn <br>
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	public Delaunay_Triangulation(String file) throws Exception {
 		this(read_file(file));
@@ -124,7 +129,7 @@ public class Delaunay_Triangulation {
 
 	/**
 	 * the number of (different) vertices in this triangulation.
-	 * 
+	 *
 	 * @return the number of vertices in the triangulation (duplicates are
 	 *         ignore - set size).
 	 */
@@ -155,7 +160,7 @@ public class Delaunay_Triangulation {
 	/**
 	 * insert the point to this Delaunay Triangulation. Note: if p is null or
 	 * already exist in this triangulation p is ignored.
-	 * 
+	 *
 	 * @param p
 	 *            new vertex to be inserted the triangulation.
 	 */
@@ -166,7 +171,7 @@ public class Delaunay_Triangulation {
 		updateBoundingBox(p);
 		this._vertices.add(p);
 		Triangle_dt t = insertPointSimple(p);
-		if (t == null) // 
+		if (t == null) //
 			return;
 		Triangle_dt tt = t;
 		currT = t; // recall the last point for - fast (last) update iterator.
@@ -177,7 +182,7 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
-	 * returns an iterator object involved in the last update. 
+	 * returns an iterator object involved in the last update.
 	 * @return iterator to all triangles involved in the last update of the
 	 *         triangulation NOTE: works ONLY if the are triangles (it there is
 	 *         only a half plane - returns an empty iterator
@@ -222,7 +227,7 @@ public class Delaunay_Triangulation {
 		}
 
 		switch (p.pointLineTest(firstP, lastP)) {
-		case Point_dt.LEFT: 
+		case Point_dt.LEFT:
 			startTriangle = extendOutside(firstT.abnext, p);
 			allCollinear = false;
 			break;
@@ -230,7 +235,7 @@ public class Delaunay_Triangulation {
 			startTriangle = extendOutside(firstT, p);
 			allCollinear = false;
 			break;
-		case Point_dt.ONSEGMENT: 
+		case Point_dt.ONSEGMENT:
 			insertCollinear(p, Point_dt.ONSEGMENT);
 			break;
 		case Point_dt.INFRONTOFA:
@@ -275,7 +280,7 @@ public class Delaunay_Triangulation {
 			lastT = t;
 			lastP = p;
 			break;
-		case Point_dt.ONSEGMENT: 
+		case Point_dt.ONSEGMENT:
 			u = firstT;
 			while (p.isGreater(u.a))
 				u = u.canext;
@@ -363,7 +368,7 @@ public class Delaunay_Triangulation {
 
 	private Triangle_dt extendOutside(Triangle_dt t, Point_dt p) {
 
-		if (p.pointLineTest(t.a, t.b) == Point_dt.ONSEGMENT) { 
+		if (p.pointLineTest(t.a, t.b) == Point_dt.ONSEGMENT) {
 			Triangle_dt dg = new Triangle_dt(t.a, t.b, p);
 			Triangle_dt hp = new Triangle_dt(p, t.b);
 			t.b = p;
@@ -429,7 +434,7 @@ public class Delaunay_Triangulation {
 
 		Triangle_dt u = t.abnext, v;
 		t._mc = mc;
-		if (u.halfplane || !u.circumcircle_contains(t.c)) 
+		if (u.halfplane || !u.circumcircle_contains(t.c))
 			return;
 
 		if (t.a == u.a) {
@@ -487,8 +492,8 @@ public class Delaunay_Triangulation {
 
 	/**
 	 * this method write the triangulation as an SMF file (OFF like format)
-	 * 
-	 * 
+	 *
+	 *
 	 * @param smfFile
 	 *            - file name
 	 * @throws Exception
@@ -535,7 +540,7 @@ public class Delaunay_Triangulation {
 	 * NOTE: has a 'bug-like' behavor: <br />
 	 * in cases of colinear - not on a asix parallel rectangle,
 	 * colinear points are reported
-	 * 
+	 *
 	 * @return the number of vertices in the convex hull.
 	 */
 	public int CH_size() {
@@ -594,15 +599,15 @@ public class Delaunay_Triangulation {
 
 	/*
 	 * SMF file has an OFF like format (a face (f) is presented by the indexes
-	 * of its points - starting from 1, and not from 0): 
-	 * begin 
+	 * of its points - starting from 1, and not from 0):
+	 * begin
 	 * v x1 y1 z1
-	 * ... 
-	 * v xn yn zn 
-	 * f i11 i12 i13 
-	 * ... 
-	 * f im1 im2 im3 
-	 * end 
+	 * ...
+	 * v xn yn zn
+	 * f i11 i12 i13
+	 * ...
+	 * f im1 im2 im3
+	 * end
 	 */
 	private static Point_dt[] read_smf(String smfFile) throws Exception {
 		return read_smf(smfFile, 1, 1, 1, 0, 0, 0);
@@ -618,7 +623,7 @@ public class Delaunay_Triangulation {
 			s = is.readLine();
 
 		Vector<Point_dt> vec = new Vector<Point_dt>();
-		Point_dt[] ans = null; // 
+		Point_dt[] ans = null; //
 		while (s != null && s.charAt(0) == 'v') {
 			StringTokenizer st = new StringTokenizer(s);
 			st.nextToken();
@@ -639,20 +644,30 @@ public class Delaunay_Triangulation {
 	 * triangulation a half plane triangle will be returned (see contains), the
 	 * search has expected time of O(n^0.5), and it starts form a fixed triangle
 	 * (this.startTriangle),
-	 * 
+	 *
 	 * @param p
 	 *            query point
 	 * @return the triangle that point p is in.
 	 */
 	public Triangle_dt find(Point_dt p) {
-		return find(this.startTriangle, p);
+
+		// If triangulation has a spatial index try to use it as the starting triangle
+		Triangle_dt searchTriangle = startTriangle;
+		if(gridIndex != null) {
+			 Triangle_dt indexTriangle = gridIndex.findCellTriangleOf(p);
+			if(indexTriangle != null)
+				searchTriangle = indexTriangle;
+		}
+
+		// Search for the point's triangle starting from searchTriangle
+		return find(searchTriangle, p);
 	}
 
 	/**
 	 * finds the triangle the query point falls in, note if out-side of this
 	 * triangulation a half plane triangle will be returned (see contains). the
 	 * search starts from the the start triangle
-	 * 
+	 *
 	 * @param p
 	 *            query point
 	 * @param start
@@ -666,10 +681,10 @@ public class Delaunay_Triangulation {
 		return T;
 	}
 
-	
+
 	private static Triangle_dt find(Triangle_dt curr, Point_dt p) {
 		if (p == null)
-			return null; 
+			return null;
 		Triangle_dt next_t;
 		if (curr.halfplane) {
 			next_t = findnext2(p, curr);
@@ -719,7 +734,7 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param p
 	 *            query point
 	 * @return true iff p is within this triangulation (in its 2D convex hull).
@@ -731,7 +746,7 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 *            - X cordination of the query point
 	 * @param y
@@ -744,7 +759,7 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param q
 	 *            Query point
 	 * @return the q point with updated Z value (z value is as given the
@@ -756,7 +771,7 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param x
 	 *            - X cordination of the query point
 	 * @param y
@@ -808,10 +823,10 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
-	 * computes the current set (vector) of all triangles and 
+	 * computes the current set (vector) of all triangles and
 	 * return an iterator to them.
-	 * 
-	 * @return an iterator to the current set of all triangles. 
+	 *
+	 * @return an iterator to the current set of all triangles.
 	 */
 	public Iterator<Triangle_dt> trianglesIterator() {
 		if (this.size() <= 2)
@@ -882,5 +897,23 @@ public class Delaunay_Triangulation {
 				_triangles.elementAt(i)._mark = false;
 			}
 		}
+	}
+
+	/**
+	 * Index the triangulation using a grid index
+	 *  @param   xCellCount        number of grid cells in a row
+	 *  @param   yCellCount        number of grid cells in a column
+	 */
+	public void IndexData(int xCellCount, int yCellCount)
+	{
+		gridIndex = new GridIndex(this, xCellCount, yCellCount);
+	}
+
+	/**
+	 * Remove any existing spatial indexing
+	 */
+	public void RemoveIndex()
+	{
+		gridIndex = null;
 	}
 }
