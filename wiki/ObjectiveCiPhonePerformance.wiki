@@ -11,32 +11,32 @@ The measurements were done on the iPhone device itself and on an iPhone simulato
 All measurements were done on the 1000 points files since the iPhone 2G could not handle bigger files.<br>
 == Devices Information ==
 The iPhone device:<br>
-* Hardware: iPhone 2G see [http://www.gsmarena.com/apple_iphone-1827.php Hardware Specification]<br>
-* OS: 3.0<br>
-* Firmware: 04.05.04_G<br>
+ * Hardware: iPhone 2G see [http://www.gsmarena.com/apple_iphone-1827.php Hardware Specification]<br>
+ * OS: 3.0<br>
+ * Firmware: 04.05.04_G<br>
 The Simulator on Mac Book Air device:<br>
-* Hardware: Mac Book Air 1.86 Ghz, see [http://www.apple.com/macbookair/specs.html Hardware Specification]<br>
-* OS: OS X 10.6.1<br>
+ * Hardware: Mac Book Air 1.86 Ghz, see [http://www.apple.com/macbookair/specs.html Hardware Specification]<br>
+ * OS: OS X 10.6.1<br>
 == Tested Features ==
 === File triangulation ===
 iPhone Simulator: <br>
-* il_1000.smf - 0.179 sec<br>
-* t1-1000.tsin - 0.408 sec<br>
+ * il_1000.smf - 0.179 sec<br>
+ * t1-1000.tsin - 0.408 sec<br>
 iPhone Device:<br>
-* il_1000.smf - 1.986 sec<br>
-* t1-1000.tsin - 5.351 sec<br>
+ * il_1000.smf - 1.986 sec<br>
+ * t1-1000.tsin - 5.351 sec<br>
 === Topography ===
 iPhone Simulator: <br>
-* il_1000.smf - 0.07 sec<br>
-* t1-1000.tsin - 0.128 sec<br>
+ * il_1000.smf - 0.07 sec<br>
+ * t1-1000.tsin - 0.128 sec<br>
 iPhone Device:<br>
-* il_1000.smf - 1.598 sec<br>
-* t1-1000.tsin - 3.204 sec<br>
+ * il_1000.smf - 1.598 sec<br>
+ * t1-1000.tsin - 3.204 sec<br>
 === Find ===
 Find a triangle that is in the middle of the view<br>
 iPhone Simulator: <br>
-* il_1000.smf - 0.001 sec<br>
-* t1-1000.tsin - 0.001 sec<br>
+ * il_1000.smf - 0.001 sec<br>
+ * t1-1000.tsin - 0.001 sec<br>
 iPhone Device:<br>
-* il_1000.smf - 0.006 sec<br>
-* t1-1000.tsin - 0.007 sec<br>
+ * il_1000.smf - 0.006 sec<br>
+ * t1-1000.tsin - 0.007 sec<br>
