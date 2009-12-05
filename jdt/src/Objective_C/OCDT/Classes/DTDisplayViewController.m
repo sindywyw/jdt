@@ -119,8 +119,10 @@
 #pragma mark -
 
 - (void) recievedLoadFileNotification:(NSNotification*)aNotification{
+	NSLog(@"File load started");
 	NSString *fileName = [[aNotification userInfo] objectForKey:@"fileName"];
 	[_displayView openTextFile:fileName];
+	NSLog(@"File load ended");
 }
 
 - (void) recievedSaveFileNotification:(NSNotification*)aNotification{
@@ -138,9 +140,9 @@
 	switch (section) {
 		case DT_SECTION_VIEW:
 			switch (row) {
-				case DT_VIEW_CH_CELL:
-					[_displayView.ajd CH_vertices_Iterator];
-					break;
+//				case DT_VIEW_CH_CELL:
+//					[_displayView.ajd CH_vertices_Iterator];
+//					break;
 				case DT_VIEW_FIND_CELL:
 					_displayView.stage = FIND;
 					break;
@@ -165,8 +167,8 @@
 					_displayView.view_flag = VIEW1;
 					[_displayView setNeedsDisplayInRect:_displayView.bounds];
 					break;
-				case DT_VIEW_SECTION_CELL:
-					_displayView.stage = SECTION1;
+//				case DT_VIEW_SECTION_CELL:
+//					_displayView.stage = SECTION1;
 					break;
 				case DT_VIEW_TOPO_CELL:
 					_displayView.view_flag = VIEW3;
@@ -202,11 +204,11 @@
 					[_displayView setNeedsDisplayInRect:_displayView.bounds];
 				}
 					break;
-				case DT_INPUT_CLIENT_5M:
-					_displayView.stage = CLIENT;
-					break;
-				case DT_INPUT_GUARD_30M:
-					_displayView.stage = GUARD;
+//				case DT_INPUT_CLIENT_5M:
+//					_displayView.stage = CLIENT;
+//					break;
+//				case DT_INPUT_GUARD_30M:
+//					_displayView.stage = GUARD;
 					break;
 				case DT_INPUT_POINT_CELL:
 					_displayView.stage = POINT;

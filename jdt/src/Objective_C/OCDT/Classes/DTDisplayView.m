@@ -104,6 +104,7 @@
 }
 
 - (void)drawRect:(CGRect)rect {
+	NSLog (@"Draw rect started");
 //    // Drawing code
 //	CGContextRef context = UIGraphicsGetCurrentContext();
 //	//Triangle test
@@ -248,6 +249,7 @@
 		if (c1 > 0)
 			NSLog(@"clients:%d visible c:%d ave:%f", [ccc count], c1, (double)c2 / (double)c1);
 	}
+	NSLog (@"Draw rect ended");
 }
 
 
@@ -633,11 +635,13 @@
 			break;
 		}
 		case (FIND): {
+			NSLog(@"Find started");
 			Point_dt *q = [[Point_dt alloc] initWithX:xx y:yy];
 			Point_dt *p = [self screen2world_fixed:q];
 			[q release];
 			_t1 = [_ajd find:p];
 			[self setNeedsDisplayInRect:self.bounds];
+			NSLog(@"Find ended");
 			break;
 		}
 		case (SECTION1): {
@@ -659,7 +663,7 @@
 			
 			// _t2 = _ajd.find(_p2);
 //			_los = new Visibility(_ajd);
-//			_los.computeSection(_p1, _p2);
+// 			_los.computeSection(_p1, _p2);
 			[q release];
 			[self setNeedsDisplayInRect:self.bounds];
 			_stage = SECTION1;
