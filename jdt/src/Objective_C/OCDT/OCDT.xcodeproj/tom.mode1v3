@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>E278B13610CA7D3A00C9B493</string>
+						<string>E278B14210CA7D7B00C9B493</string>
 						<key>history</key>
 						<array>
 							<string>E2E8F6B710CA7B9800057E42</string>
@@ -328,7 +328,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {284, 660}}</string>
+							<string>{{0, 1}, {284, 660}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -365,7 +365,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>DTSettingsViewController.h</string>
+								<string>DTDisplayView.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -373,11 +373,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>DTSettingsViewController.h</string>
+										<string>DTDisplayView.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>E278B13510CA7D3A00C9B493</string>
+										<string>E278B14110CA7D7B00C9B493</string>
 										<key>history</key>
 										<array>
 											<string>E2027E2510B6C37F00040BFB</string>
@@ -416,9 +416,9 @@
 											<string>E2EF5CF110CA74A4003B44E3</string>
 											<string>E2EF5CF310CA74A4003B44E3</string>
 											<string>E2EF5CFA10CA7568003B44E3</string>
-											<string>E2EF5D0510CA7ABC003B44E3</string>
 											<string>E278B11910CA7CB300C9B493</string>
-											<string>E278B13410CA7D3A00C9B493</string>
+											<string>E278B14010CA7D7B00C9B493</string>
+											<string>E2EF5D0510CA7ABC003B44E3</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -1048,21 +1048,21 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1C78EAB2065D492600B07095</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>DTSettingsViewController.h</string>
+								<string>DTDisplayView.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {452, 79}}</string>
+								<string>{{0, 0}, {1112, 439}}</string>
 								<key>RubberWindowFrame</key>
-								<string>21 447 452 308 0 0 1280 778 </string>
+								<string>21 87 1112 668 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>79pt</string>
+							<string>439pt</string>
 						</dict>
 						<dict>
 							<key>BecomeActive</key>
@@ -1075,7 +1075,7 @@
 								<dict>
 									<key>PBXCVSModuleTreeModuleColumnWidthsKey</key>
 									<array>
-										<real>200</real>
+										<real>694</real>
 										<real>56.66162109375</real>
 										<real>63</real>
 										<real>60</real>
@@ -1100,9 +1100,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 84}, {452, 183}}</string>
+								<string>{{0, 444}, {1112, 183}}</string>
 								<key>RubberWindowFrame</key>
-								<string>21 447 452 308 0 0 1280 778 </string>
+								<string>21 87 1112 668 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXCVSModule</string>
@@ -1111,7 +1111,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>267pt</string>
+					<string>627pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -1132,7 +1132,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.scm</string>
 			<key>WindowString</key>
-			<string>21 447 452 308 0 0 1280 778 </string>
+			<string>21 87 1112 668 0 0 1280 778 </string>
 			<key>WindowToolGUID</key>
 			<string>E278B13210CA7D3400C9B493</string>
 			<key>WindowToolIsVisible</key>
