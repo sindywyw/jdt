@@ -33,10 +33,10 @@
 		E20F54AF10C9819E005CEF08 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E20F54AB10C9819E005CEF08 /* MainWindow.xib */; };
 		E24EB61F10B4A73E001CEEEB /* Point_dt.m in Sources */ = {isa = PBXBuildFile; fileRef = E24EB61E10B4A73E001CEEEB /* Point_dt.m */; };
 		E24EB64110B4B4A9001CEEEB /* Triangle_dt.m in Sources */ = {isa = PBXBuildFile; fileRef = E24EB64010B4B4A9001CEEEB /* Triangle_dt.m */; };
+		E278B14B10CA7FA700C9B493 /* settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E298A24F10C1480B00424B14 /* settings-icon.png */; };
+		E278B14C10CA7FA700C9B493 /* folder-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E298A25010C1480B00424B14 /* folder-icon.png */; };
+		E278B14D10CA7FA700C9B493 /* display-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E298A25110C1480B00424B14 /* display-icon.png */; };
 		E298A1C110C12FA000424B14 /* DTSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E298A1C010C12FA000424B14 /* DTSettingsViewController.m */; };
-		E298A25210C1480B00424B14 /* settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E298A24F10C1480B00424B14 /* settings-icon.png */; };
-		E298A25310C1480B00424B14 /* folder-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E298A25010C1480B00424B14 /* folder-icon.png */; };
-		E298A25410C1480B00424B14 /* display-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E298A25110C1480B00424B14 /* display-icon.png */; };
 		E299921510B52994001CC324 /* Circle_dt.m in Sources */ = {isa = PBXBuildFile; fileRef = E299921410B52994001CC324 /* Circle_dt.m */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +80,7 @@
 		E24EB63E10B4B3DF001CEEEB /* dt_defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dt_defines.h; sourceTree = "<group>"; };
 		E24EB63F10B4B4A9001CEEEB /* Triangle_dt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle_dt.h; sourceTree = "<group>"; };
 		E24EB64010B4B4A9001CEEEB /* Triangle_dt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Triangle_dt.m; sourceTree = "<group>"; };
+		E278B14710CA7F8200C9B493 /* input_point.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = input_point.jpg; path = images/Screenshots/input_point.jpg; sourceTree = "<group>"; };
 		E298A1BF10C12FA000424B14 /* DTSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTSettingsViewController.h; sourceTree = "<group>"; };
 		E298A1C010C12FA000424B14 /* DTSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTSettingsViewController.m; sourceTree = "<group>"; };
 		E298A24F10C1480B00424B14 /* settings-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-icon.png"; path = "images/settings-icon.png"; sourceTree = "<group>"; };
@@ -252,6 +253,7 @@
 		E2EF5D0410CA7AB3003B44E3 /* Screenshots */ = {
 			isa = PBXGroup;
 			children = (
+				E278B14710CA7F8200C9B493 /* input_point.jpg */,
 				E2EF5D0810CA7ACA003B44E3 /* input_point.PNG */,
 				E2EF5D0910CA7ACA003B44E3 /* view_topography.PNG */,
 				E2EF5D0A10CA7ACA003B44E3 /* tab_settings.PNG */,
@@ -302,9 +304,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E298A25210C1480B00424B14 /* settings-icon.png in Resources */,
-				E298A25310C1480B00424B14 /* folder-icon.png in Resources */,
-				E298A25410C1480B00424B14 /* display-icon.png in Resources */,
+				E278B14B10CA7FA700C9B493 /* settings-icon.png in Resources */,
+				E278B14C10CA7FA700C9B493 /* folder-icon.png in Resources */,
+				E278B14D10CA7FA700C9B493 /* display-icon.png in Resources */,
 				E20F549F10C9811A005CEF08 /* il_1000.smf in Resources */,
 				E20F54A010C9811A005CEF08 /* t1-1000.tsin in Resources */,
 				E20F54A110C9811A005CEF08 /* t1-5000.smf in Resources */,
