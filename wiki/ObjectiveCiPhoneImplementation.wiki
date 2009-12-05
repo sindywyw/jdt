@@ -1,0 +1,28 @@
+#labels Phase-Design,Phase-Implementation,Featured,iPhone,Triangulation
+#Details of the Objective C implementation of the JDT for the iPhone device
+= Introduction =
+
+The jdt application was re-implemented in the Objective C language as an iPhone application.
+Most of the original jdt's application features were introduced to this version.
+
+= Details =
+
+*The major challenges for this task are:*
+* The constraints of a mobile device (memory, user interface, hd...)
+* The variation between Java and Objective C
+
+==Content==
+The following features of the original application were introduced to the iPhone version:
+* Loading and saving tsin/smf files.
+* Input methods - Point, 100 Random points
+* View options - Lines, Triangles, Topo, Find, Info
+
+==Implementation==
+The is implemented as a tab bar application which has 3 tabs:
+* Resources - A tab in which the user can store or load _tsin_ and _smf_ files.
+* Settings - A tab which enables the user to choose between the Input methods and the View options + to clear the screen.
+* Display - Display the current triangulation according to the settings.
+
+===The Display Tab===
+The display tab contains a user interface called _UIScrollView_ which is a container for the triangulation graphics.
+The _UIScrollView_ enables scrolling + zooming in and out so that an image that is larger than the actual screen can be seen easily.
