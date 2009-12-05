@@ -97,11 +97,11 @@
 				case DT_INPUT_100_RAND_PS_CELL:
 					cell.textLabel.text = @"100 Random points";
 					break;
-				case DT_INPUT_CLIENT_5M:
-					cell.textLabel.text = @"Client 5m";
-					break;
-				case DT_INPUT_GUARD_30M:
-					cell.textLabel.text = @"Guard 30m";
+//				case DT_INPUT_CLIENT_5M:
+//					cell.textLabel.text = @"Client 5m";
+//					break;
+//				case DT_INPUT_GUARD_30M:
+//					cell.textLabel.text = @"Guard 30m";
 					break;
 				case DT_INPUT_POINT_CELL:
 					cell.textLabel.text = @"Point";
@@ -114,8 +114,8 @@
 		case DT_SECTION_VIEW:
 		{
 			switch (indexPath.row) {
-				case DT_VIEW_CH_CELL:
-					cell.textLabel.text = @"CH";
+//				case DT_VIEW_CH_CELL:
+//					cell.textLabel.text = @"CH";
 					break;
 				case DT_VIEW_FIND_CELL:
 					cell.textLabel.text = @"Find";
@@ -132,8 +132,8 @@
 				case DT_VIEW_TRIANGLES_CELL:
 					cell.textLabel.text = @"Triangles";
 					break;
-				case DT_VIEW_SECTION_CELL:
-					cell.textLabel.text = @"Section";
+//				case DT_VIEW_SECTION_CELL:
+//					cell.textLabel.text = @"Section";
 					break;
 				default:
 					break;
