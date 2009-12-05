@@ -21,24 +21,27 @@ The following features of the original application were introduced to the iPhone
 The is implemented as a tab bar application which has 3 tabs:<br>
 === Resources ===
 A tab in which the user can store or load _tsin_ and _smf_ files.<br>
-See screenshot:<br>
+*See screenshot:*<br>
 https://jdt.googlecode.com/svn/wiki/ObjectiveCiPhoneImplementation.attach/Screenshots/tab_resources.PNG
+<br>
 <br>
 === Settings ===
 A tab which enables the user to choose between the Input methods and the View options + to clear the screen.<br>
-See screenshot:<br>
+*See screenshot:*<br>
 https://jdt.googlecode.com/svn/wiki/ObjectiveCiPhoneImplementation.attach/Screenshots/tab_settings.PNG
+<br>
 <br>
 === Display ===
 Display the current triangulation according to the settings.<br>
 The display tab contains a user interface called _UIScrollView_ which is a container for the triangulation graphics.<br>
 The _UIScrollView_ enables scrolling + zooming in and out so that an image that is larger than the actual screen can be seen easily.<br>
 See screenshots:<br>
-Manual point insertions:<br>
+<br>
+*Manual point insertions:*<br>
 https://jdt.googlecode.com/svn/wiki/ObjectiveCiPhoneImplementation.attach/Screenshots/input_point.PNG
-<br>
-Map topography view:<br>
+<br><br>
+*Map topography view:*<br>
 https://jdt.googlecode.com/svn/wiki/ObjectiveCiPhoneImplementation.attach/Screenshots/view_topography.PNG
-<br>
+<br><br>
 = Performance =
 See [ObjectiveCiPhonePerformance Objective C iPhone Performance page]
