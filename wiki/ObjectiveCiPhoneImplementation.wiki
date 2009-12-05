@@ -34,7 +34,7 @@ The display tab contains a user interface called _UIScrollView_ which is a conta
 The _UIScrollView_ enables scrolling + zooming in and out so that an image that is larger than the actual screen can be seen easily.<br>
 See screenshots:<br>
 Manual point insertions:<br>
-http://code.google.com/p/jdt/source/browse/trunk/jdt/src/Objective_C/OCDT/images/Screenshots/input_point.jpg
+[http://code.google.com/p/jdt/source/browse/trunk/jdt/src/Objective_C/OCDT/images/Screenshots/input_point.jpg image]
 <br>
 Map topography view:<br>
 http://code.google.com/p/jdt/source/browse/trunk/jdt/src/Objective_C/OCDT/images/Screenshots/view_topography.PNG
