@@ -166,6 +166,11 @@
 			E278B11910CA7CB300C9B493 /* PBXBookmark */ = E278B11910CA7CB300C9B493 /* PBXBookmark */;
 			E278B11A10CA7CB300C9B493 /* PBXTextBookmark */ = E278B11A10CA7CB300C9B493 /* PBXTextBookmark */;
 			E278B11D10CA7CB300C9B493 /* PBXTextBookmark */ = E278B11D10CA7CB300C9B493 /* PBXTextBookmark */;
+			E278B13010CA7D3400C9B493 /* PBXBookmark */ = E278B13010CA7D3400C9B493 /* PBXBookmark */;
+			E278B13110CA7D3400C9B493 /* PBXTextBookmark */ = E278B13110CA7D3400C9B493 /* PBXTextBookmark */;
+			E278B13410CA7D3A00C9B493 /* PBXTextBookmark */ = E278B13410CA7D3A00C9B493 /* PBXTextBookmark */;
+			E278B13510CA7D3A00C9B493 /* PBXTextBookmark */ = E278B13510CA7D3A00C9B493 /* PBXTextBookmark */;
+			E278B13610CA7D3A00C9B493 /* PBXTextBookmark */ = E278B13610CA7D3A00C9B493 /* PBXTextBookmark */;
 			E27B5F8F10BDADC30010A505 = E27B5F8F10BDADC30010A505 /* PBXTextBookmark */;
 			E298A07210BFE3A800424B14 = E298A07210BFE3A800424B14 /* PBXTextBookmark */;
 			E298A07410BFE3A800424B14 = E298A07410BFE3A800424B14 /* PBXTextBookmark */;
@@ -648,6 +653,50 @@
 		vrLoc = 173;
 	};
 	E278B11D10CA7CB300C9B493 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E2EF5D1010CA7B44003B44E3 /* MyFrame.java */;
+		name = "MyFrame.java: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1259;
+		vrLoc = 17343;
+	};
+	E278B13010CA7D3400C9B493 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = E298A1BF10C12FA000424B14 /* DTSettingsViewController.h */;
+	};
+	E278B13110CA7D3400C9B493 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E298A1BF10C12FA000424B14 /* DTSettingsViewController.h */;
+		name = "DTSettingsViewController.h: 7";
+		rLen = 0;
+		rLoc = 145;
+		rType = 0;
+		vrLen = 196;
+		vrLoc = 173;
+	};
+	E278B13410CA7D3A00C9B493 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E298A1BF10C12FA000424B14 /* DTSettingsViewController.h */;
+		name = "DTSettingsViewController.h: 7";
+		rLen = 0;
+		rLoc = 145;
+		rType = 0;
+		vrLen = 759;
+		vrLoc = 173;
+	};
+	E278B13510CA7D3A00C9B493 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E298A1BF10C12FA000424B14 /* DTSettingsViewController.h */;
+		name = "DTSettingsViewController.h: 7";
+		rLen = 0;
+		rLoc = 145;
+		rType = 0;
+		vrLen = 759;
+		vrLoc = 173;
+	};
+	E278B13610CA7D3A00C9B493 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = E2EF5D1010CA7B44003B44E3 /* MyFrame.java */;
 		name = "MyFrame.java: 1";
