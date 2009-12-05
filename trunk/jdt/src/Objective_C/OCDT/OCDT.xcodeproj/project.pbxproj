@@ -87,6 +87,10 @@
 		E298A25110C1480B00424B14 /* display-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "display-icon.png"; path = "images/display-icon.png"; sourceTree = "<group>"; };
 		E299921310B52994001CC324 /* Circle_dt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circle_dt.h; sourceTree = "<group>"; };
 		E299921410B52994001CC324 /* Circle_dt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Circle_dt.m; sourceTree = "<group>"; };
+		E2EF5D0810CA7ACA003B44E3 /* input_point.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = input_point.PNG; path = images/Screenshots/input_point.PNG; sourceTree = "<group>"; };
+		E2EF5D0910CA7ACA003B44E3 /* view_topography.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = view_topography.PNG; path = images/Screenshots/view_topography.PNG; sourceTree = "<group>"; };
+		E2EF5D0A10CA7ACA003B44E3 /* tab_settings.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tab_settings.PNG; path = images/Screenshots/tab_settings.PNG; sourceTree = "<group>"; };
+		E2EF5D0B10CA7ACA003B44E3 /* tab_resources.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tab_resources.PNG; path = images/Screenshots/tab_resources.PNG; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,11 +241,23 @@
 		E298A24C10C147EE00424B14 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E2EF5D0410CA7AB3003B44E3 /* Screenshots */,
 				E298A24F10C1480B00424B14 /* settings-icon.png */,
 				E298A25010C1480B00424B14 /* folder-icon.png */,
 				E298A25110C1480B00424B14 /* display-icon.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		E2EF5D0410CA7AB3003B44E3 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				E2EF5D0810CA7ACA003B44E3 /* input_point.PNG */,
+				E2EF5D0910CA7ACA003B44E3 /* view_topography.PNG */,
+				E2EF5D0A10CA7ACA003B44E3 /* tab_settings.PNG */,
+				E2EF5D0B10CA7ACA003B44E3 /* tab_resources.PNG */,
+			);
+			name = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
