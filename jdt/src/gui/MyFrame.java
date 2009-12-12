@@ -15,8 +15,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
+
+import algorithms.topographic_map.CounterLine;
 
 import delaunay_triangulation.Delaunay_Triangulation;
 import delaunay_triangulation.Point_dt;
@@ -266,6 +269,29 @@ class MyFrame extends Frame implements ActionListener {
 		}
 		return ans;
 	}
+	
+	public void drawTopographicMap(Graphics g,ArrayList<CounterLine> counterLines){
+		g.setColor(Color.YELLOW);
+		for (CounterLine line : counterLines){
+			int[] xPoints = new int[line.getNumberOfPoints()];
+			int[] yPoints = new int[line.getNumberOfPoints()];
+			
+			Iterator<Point_dt> pointsItr = line.getPointsListIterator();
+			int index = 0;
+			while (pointsItr.hasNext()){
+				Point_dt point = pointsItr.next();
+				Point_dt screenPoint = world2screen(point);
+				xPoints[index] = (int) screenPoint.x();
+				yPoints[index]= (int)screenPoint.y();
+				index++;
+			}
+			if(line.isClosed())
+				g.drawPolygon(xPoints,yPoints,xPoints.length);
+			else
+				g.drawPolyline(xPoints, yPoints, xPoints.length);	
+		}
+	}
+
 
 	public void drawTriangle(Graphics g, Triangle_dt t, Color cl) {
 		if (_view_flag == VIEW1 | t.isHalfplane()) {
