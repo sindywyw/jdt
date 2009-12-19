@@ -1,8 +1,8 @@
 package algorithms.topographic_map;
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 import delaunay_triangulation.Point_dt;
 
@@ -17,8 +17,9 @@ import delaunay_triangulation.Point_dt;
 public class CounterLine {
 	private boolean _isClosed;
 	private double _height;
-	private LinkedList<Point_dt> _points;
-	public CounterLine(LinkedList<Point_dt> points, double height, boolean isClosed){
+
+	private ArrayList<Point_tp> _points;
+	public CounterLine(ArrayList<Point_tp> points, double height, boolean isClosed){
 		this._isClosed = isClosed;
 		this._height = height;
 		this._points = points;
@@ -33,13 +34,23 @@ public class CounterLine {
 	}
 	/**
 	 * 
-	 * @return An Iterator object that iterates over the counter line points.
+	 * @return An Iterator object that iterates over the counter line points. converts Point_tp to Point_dt
 	 * @see Point_dt
 	 * @see Iterator
 	 */
 	public Iterator<Point_dt> getPointsListIterator(){
-		return _points.listIterator();
+		return new PointDtIterator(_points.listIterator());
 	}
+	/**
+	 * 
+	 * @return the counter line points list.
+	 * @see Point_dt
+	 * @see ArrayList
+	 */
+	public ArrayList<Point_tp> getPointsList(){
+		return _points;
+	}
+	
 	
 	/**
 	 *
@@ -56,4 +67,33 @@ public class CounterLine {
 	public int getNumberOfPoints(){
 		return _points.size();
 	}
+	
+	
+	
+	private class PointDtIterator implements Iterator<Point_dt> {
+
+		private Iterator<Point_tp>_pointTPItr;
+		public PointDtIterator(Iterator<Point_tp> pointsTPItr){
+			this._pointTPItr = pointsTPItr;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return _pointTPItr.hasNext();			
+		}
+
+		@Override
+		public Point_dt next() {
+			
+			Point_tp tpPoint = _pointTPItr.next();
+			return new Point_dt(tpPoint.getX().doubleValue(),tpPoint.getY().doubleValue(),tpPoint.getZ());
+		}
+
+		@Override
+		public void remove() {
+			_pointTPItr.remove();
+		}
+		
+	}
+
 }
