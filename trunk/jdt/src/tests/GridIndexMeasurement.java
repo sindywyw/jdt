@@ -15,8 +15,9 @@ import java.util.Date;
 public class GridIndexMeasurement
 {
 	static final int FIND_COUNT = 100000;
-	static final int HORIZONTAL_CELL_COUNT = (int)Math.sqrt(FIND_COUNT);
-	static final int VERTICAL_CELL_COUNT =  (int)Math.sqrt(FIND_COUNT);
+	static final int INDEX_SIZE = 169;
+	static final int HORIZONTAL_CELL_COUNT = (int)Math.sqrt(INDEX_SIZE);
+	static final int VERTICAL_CELL_COUNT =  (int)Math.sqrt(INDEX_SIZE);
 
 	public static void main(String[] args) {
 		try {
@@ -27,7 +28,7 @@ public class GridIndexMeasurement
 			Delaunay_Triangulation dt = new Delaunay_Triangulation(file);
 
 			// Prepre search points
-			BoundingBox dt_box = new BoundingBox(dt.minBoundingBox(), dt.maxBoundingBox());
+			BoundingBox dt_box = dt.getBoundingBox();
 			Point_dt[] searchedPoints = new Point_dt[FIND_COUNT];
 
 			for (int i = 0; i < FIND_COUNT; i++) {

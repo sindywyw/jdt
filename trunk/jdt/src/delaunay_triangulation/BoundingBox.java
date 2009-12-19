@@ -12,14 +12,42 @@ package delaunay_triangulation;
 public class BoundingBox
 {
 	/**
-	* The lower left point of the rectangle
-	*/
-	private Point_dt lowerLeft;
+   *  the minimum x-coordinate
+   */
+  private double minx;
 
-	/**
-	* The upper right corner of the rectangle
-	*/
-	private Point_dt upperRight;
+  /**
+   *  the maximum x-coordinate
+   */
+  private double maxx;
+
+  /**
+   *  the minimum y-coordinate
+   */
+  private double miny;
+
+  /**
+   *  the maximum y-coordinate
+   */
+  private double maxy;
+
+	public BoundingBox()
+	{
+		setToNull();
+	}
+
+	public BoundingBox(BoundingBox other)
+	{
+		if(other.isNull())
+			setToNull();
+		else
+			init(other.minx, other.maxx, other.miny, other.maxy);
+	}
+
+	public BoundingBox(double minx, double maxx, double miny, double maxy)
+	{
+		init(minx,maxx, miny, maxy);
+	}
 
 	/**
 	 * Create a bounding box between lowerLeft and upperRight
@@ -28,16 +56,91 @@ public class BoundingBox
 	 */
 	public BoundingBox(Point_dt lowerLeft, Point_dt upperRight)
 	{
-		// Swap the points so that lowerLeft will be below upperRight
-		if(lowerLeft.isGreater(upperRight))
-		{
-			Point_dt temp =  upperRight;
-			upperRight = lowerLeft;
-			lowerLeft = temp;
-		}
+		init(lowerLeft.x, upperRight.x, lowerLeft.y, upperRight.y);
+	}
 
-        this.lowerLeft = lowerLeft;
-		this.upperRight = upperRight;
+   /**
+   *  Initialize an <code>Envelope</code> for a region defined by maximum and minimum values.
+   *
+   *@param  x1  the first x-value
+   *@param  x2  the second x-value
+   *@param  y1  the first y-value
+   *@param  y2  the second y-value
+   */
+	private void init(double x1, double x2, double y1, double y2)
+	{
+		if (x1 < x2) {
+			minx = x1;
+			maxx = x2;
+		}
+		else {
+			minx = x2;
+			maxx = x1;
+		}
+		if (y1 < y2) {
+			miny = y1;
+			maxy = y2;
+		}
+		else {
+			miny = y2;
+			maxy = y1;
+		}
+	}
+
+	/**
+   *  Makes this <code>Envelope</code> a "null" envelope, that is, the envelope
+   *  of the empty geometry.
+   */
+	private void setToNull()
+	{
+		minx = 0;
+		maxx = -1;
+		miny = 0;
+		maxy = -1;
+	}
+
+	/**
+   *  Returns <code>true</code> if this <code>Envelope</code> is a "null"
+   *  envelope.
+   *
+   *@return    <code>true</code> if this <code>Envelope</code> is uninitialized
+   *      or is the envelope of the empty geometry.
+   */
+	public boolean isNull()
+	{
+		return maxx < minx;
+	}
+
+	/**
+   * Tests if the <code>Envelope other</code>
+   * lies wholely inside this <code>Envelope</code> (inclusive of the boundary).
+   *
+   *@param  other the <code>Envelope</code> to check
+   *@return true if this <code>Envelope</code> covers the <code>other</code>
+   */
+	public boolean contains(BoundingBox other) {
+		return !(isNull() || other.isNull()) &&
+				other.minx >= minx &&
+				other.maxy <= maxx &&
+				other.miny >= miny &&
+				other.maxy <= maxy;
+	}
+
+	public BoundingBox unionWith(BoundingBox other)
+	{
+		if (other.isNull()) {
+			return new BoundingBox(this);
+		}
+		if (isNull()) {
+			return new BoundingBox(other);
+		}
+		else {
+			return new BoundingBox(
+					Math.min(minx, other.minx),
+					Math.max(maxx, other.maxx),
+					Math.min(miny, other.miny),
+					Math.max(maxy, other.maxy));
+		}
 	}
 
 	/**
@@ -45,7 +148,7 @@ public class BoundingBox
 	 */
 	public double minX()
 	{
-		return lowerLeft.x;
+		return minx;
 	}
 
 	/**
@@ -53,7 +156,7 @@ public class BoundingBox
 	 */
 	public double minY()
 	{
-		return lowerLeft.y;
+		return miny;
 	}
 
 	/**
@@ -61,7 +164,7 @@ public class BoundingBox
 	 */
 	public double maxX()
 	{
-		return upperRight.x;
+		return maxx;
 	}
 
 	/**
@@ -69,7 +172,7 @@ public class BoundingBox
 	 */
 	public double maxY()
 	{
-		return upperRight.y;
+		return maxy;
 	}
 
 	/**
@@ -77,7 +180,7 @@ public class BoundingBox
 	 */
 	public double getWidth()
 	{
-		return upperRight.x() - lowerLeft.x();
+		return maxx - minx;
 	}
 
 	/**
@@ -85,6 +188,22 @@ public class BoundingBox
 	 */
 	public double getHeight()
 	{
-		return upperRight.y() - lowerLeft.y();
+		return maxy - miny;
+	}
+
+	/**
+	 * @return      Maximum coordinate of bounding box
+	 */
+	public Point_dt getMinPoint()
+	{
+		return new Point_dt(minx, miny);
+	}
+
+	/**
+	 * @return      Minimum coordinate of bounding box
+	 */
+	public Point_dt getMaxPoint()
+	{
+		return new Point_dt(maxx, maxy);
 	}
 }

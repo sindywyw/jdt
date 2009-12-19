@@ -91,7 +91,17 @@ public class Triangle_dt {
 	 * returns the consecutive triangle which shares this triangle p3,p1 edge. 
 	 */
 	public Triangle_dt next_31() {return this.canext;} 
-	
+
+	/**
+	 * @return  The bounding rectange between the minimum and maximum coordinates
+	 *                of the triangle
+	 */
+	public BoundingBox getBoundingBox() {
+		Point_dt lowerLeft, upperRight;
+		lowerLeft = new Point_dt(Math.min(a.x(), Math.min(b.x(), c.x())), Math.min(a.y(), Math.min(b.y(), c.y())));
+		upperRight = new Point_dt(Math.max(a.x(), Math.max(b.x(), c.x())), 	Math.max(a.y(), Math.max(b.y(), c.y())));
+		return new BoundingBox(lowerLeft, upperRight);
+	}
 
   void switchneighbors( Triangle_dt Old,Triangle_dt New ) {
     if ( abnext==Old ) abnext=New;

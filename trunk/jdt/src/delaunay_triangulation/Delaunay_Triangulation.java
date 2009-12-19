@@ -179,6 +179,10 @@ public class Delaunay_Triangulation {
 			flip(tt, _modCount);
 			tt = tt.canext;
 		} while (tt != t && !tt.halfplane);
+		
+		// Update index with changed triangles
+		if(gridIndex != null)
+			gridIndex.updateIndex();
 	}
 
 	/**
@@ -804,6 +808,13 @@ public class Delaunay_Triangulation {
 			else if (z > _bb_max.z())
 				_bb_max.z = z;
 		}
+	}
+
+/**
+	 * @return  The bounding rectange between the minimum and maximum coordinates
+	 */
+	public BoundingBox getBoundingBox() {
+		return new BoundingBox(_bb_min, _bb_max);
 	}
 
 	/**
