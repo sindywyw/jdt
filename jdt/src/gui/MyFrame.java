@@ -1,29 +1,15 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.FileDialog;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Vector;
-
 import algorithms.topographic_map.CounterLine;
-
 import delaunay_triangulation.Delaunay_Triangulation;
 import delaunay_triangulation.Point_dt;
 import delaunay_triangulation.Triangle_dt;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * GUI class to test the delaunay_triangulation Triangulation package:
@@ -36,6 +22,7 @@ class MyFrame extends Frame implements ActionListener {
 		win.start();
 	}
 
+	private static final int INDEX_SIZE = 13;
 	private static final long serialVersionUID = 1L;
 	// *** private data ***
 	public static final int POINT = 1, FIND = 2, VIEW1 = 3, VIEW2 = 4,
@@ -517,6 +504,10 @@ class MyFrame extends Frame implements ActionListener {
 						.maxBoundingBox().x());
 				_dy_map = new Point_dt(_ajd.minBoundingBox().y(), _ajd
 						.maxBoundingBox().y());
+
+				// compute grid index
+				_ajd.IndexData(INDEX_SIZE, INDEX_SIZE);
+				
 				repaint();
 			} catch (Exception e) { // in case something went wrong.
 				System.out.println("** Error while reading text file **");
