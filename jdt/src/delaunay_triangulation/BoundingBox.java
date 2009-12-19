@@ -31,11 +31,18 @@ public class BoundingBox
    */
   private double maxy;
 
+	/**
+	 * Creates an empty  bounding box
+	 */
 	public BoundingBox()
 	{
 		setToNull();
 	}
 
+	/**
+	 * Copy constructor
+	 * @param other         the copied bounding box
+	 */
 	public BoundingBox(BoundingBox other)
 	{
 		if(other.isNull())
@@ -44,6 +51,13 @@ public class BoundingBox
 			init(other.minx, other.maxx, other.miny, other.maxy);
 	}
 
+	/**
+	 * Creates a bounding box given the extent
+	 * @param minx      minimum x coordinate
+	 * @param maxx      maximum x coordinate
+	 * @param miny      minimum y coordinate
+	 * @param maxy      maximum y coordinate
+	 */
 	public BoundingBox(double minx, double maxx, double miny, double maxy)
 	{
 		init(minx,maxx, miny, maxy);
@@ -60,7 +74,7 @@ public class BoundingBox
 	}
 
    /**
-   *  Initialize an <code>Envelope</code> for a region defined by maximum and minimum values.
+   *  Initialize a BoundingBox for a region defined by maximum and minimum values.
    *
    *@param  x1  the first x-value
    *@param  x2  the second x-value
@@ -88,7 +102,7 @@ public class BoundingBox
 	}
 
 	/**
-   *  Makes this <code>Envelope</code> a "null" envelope, that is, the envelope
+   *  Makes this BoundingBox a "null" envelope, that is, the envelope
    *  of the empty geometry.
    */
 	private void setToNull()
@@ -100,10 +114,10 @@ public class BoundingBox
 	}
 
 	/**
-   *  Returns <code>true</code> if this <code>Envelope</code> is a "null"
+   *  Returns true if this BoundingBox is a "null"
    *  envelope.
    *
-   *@return    <code>true</code> if this <code>Envelope</code> is uninitialized
+   *@return    true if this BoundingBox is uninitialized
    *      or is the envelope of the empty geometry.
    */
 	public boolean isNull()
@@ -112,11 +126,10 @@ public class BoundingBox
 	}
 
 	/**
-   * Tests if the <code>Envelope other</code>
-   * lies wholely inside this <code>Envelope</code> (inclusive of the boundary).
+   * Tests if the other BoundingBox lies wholely inside this BoundingBox
    *
-   *@param  other the <code>Envelope</code> to check
-   *@return true if this <code>Envelope</code> covers the <code>other</code>
+   *@param  other the BoundingBox to check
+   *@return true if this BoundingBox contains the other BoundingBox
    */
 	public boolean contains(BoundingBox other) {
 		return !(isNull() || other.isNull()) &&
@@ -126,6 +139,11 @@ public class BoundingBox
 				other.maxy <= maxy;
 	}
 
+	/**
+	 * Unify the BoundingBoxes of this and the other BoundingBox
+	 * @param other     another BoundingBox
+	 * @return              The union of the two BoundingBoxes
+	 */
 	public BoundingBox unionWith(BoundingBox other)
 	{
 		if (other.isNull()) {
