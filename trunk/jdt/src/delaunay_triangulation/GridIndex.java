@@ -129,15 +129,22 @@ public class GridIndex
 	 * Updates the grid index to reflect changes to the triangulation. Note that added
 	 * triangles outside the indexed region will force to recompute the whole index
 	 * with the enlarged region.
+	 *
+	 * @param updatedTriangles      changed triangles of the triangulation. This may be added triangles,
+	 *                                             removed triangles or both. All that matter is that they cover the
+	 *                                             changed area.
 	 */
-	public void updateIndex() {
+	public void updateIndex(Iterator<Triangle_dt> updatedTriangles) {
 
 		// Gather the bounding box of the updated area
 		BoundingBox updatedRegion = new BoundingBox();
-		Iterator<Triangle_dt> updatedTriangles =  indexDelaunay.getLastUpdatedTriangles();
+
 		while(updatedTriangles.hasNext()) {
 			updatedRegion = updatedRegion.unionWith(updatedTriangles.next().getBoundingBox());
 		}
+
+		if(updatedRegion.isNull())  		// No update...
+				return;
 
 		// Bad news - the updated region lies outside the indexed region.
 		// The whole index must be recalculated

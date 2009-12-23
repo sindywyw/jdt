@@ -182,7 +182,7 @@ public class Delaunay_Triangulation {
 		
 		// Update index with changed triangles
 		if(gridIndex != null)
-			gridIndex.updateIndex();
+			gridIndex.updateIndex(getLastUpdatedTriangles());
 	}
 
 	/**
