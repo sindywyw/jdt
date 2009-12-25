@@ -129,41 +129,46 @@ public class GridIndex
 	 * Updates the grid index to reflect changes to the triangulation. Note that added
 	 * triangles outside the indexed region will force to recompute the whole index
 	 * with the enlarged region.
-	 *
-	 * @param updatedTriangles      changed triangles of the triangulation. This may be added triangles,
-	 *                                             removed triangles or both. All that matter is that they cover the
-	 *                                             changed area.
 	 */
-	public void updateIndex(Iterator<Triangle_dt> updatedTriangles) {
+         /**
+	   * Updates the grid index to reflect changes to the triangulation. Note that added
+	   * triangles outside the indexed region will force to recompute the whole index
+	   * with the enlarged region.
+	   *
+	   * @param updatedTriangles      changed triangles of the triangulation. This may be added triangles,
+	   *                                             removed triangles or both. All that matter is that they cover the
+	   *                                             changed area.
+	   */
+	  public void updateIndex(Iterator<Triangle_dt> updatedTriangles) {
 
-		// Gather the bounding box of the updated area
-		BoundingBox updatedRegion = new BoundingBox();
+	   // Gather the bounding box of the updated area
+	   BoundingBox updatedRegion = new BoundingBox();
 
-		while(updatedTriangles.hasNext()) {
-			updatedRegion = updatedRegion.unionWith(updatedTriangles.next().getBoundingBox());
-		}
+	   while(updatedTriangles.hasNext()) {
+	    updatedRegion = updatedRegion.unionWith(updatedTriangles.next().getBoundingBox());
+	   }
 
-		if(updatedRegion.isNull())  		// No update...
-				return;
+	   if(updatedRegion.isNull())    // No update...
+	     return;
 
-		// Bad news - the updated region lies outside the indexed region.
-		// The whole index must be recalculated
-		if(!indexRegion.contains(updatedRegion)) {
-			init(indexDelaunay,
-					(int) (indexRegion.getWidth() / x_size),
-					(int)(indexRegion.getHeight() / y_size),
-					indexRegion.unionWith(updatedRegion));
-		}
-		else {
-			// Find the cell region to be updated
-			Point minInvalidCell = getCellOf(updatedRegion.getMinPoint());
-			Point maxInvalidCell = getCellOf(updatedRegion.getMaxPoint());
+	   // Bad news - the updated region lies outside the indexed region.
+	   // The whole index must be recalculated
+	   if(!indexRegion.contains(updatedRegion)) {
+	    init(indexDelaunay,
+	      (int) (indexRegion.getWidth() / x_size),
+	      (int)(indexRegion.getHeight() / y_size),
+	      indexRegion.unionWith(updatedRegion));
+	   }
+	   else {
+	    // Find the cell region to be updated
+	    Point minInvalidCell = getCellOf(updatedRegion.getMinPoint());
+	    Point maxInvalidCell = getCellOf(updatedRegion.getMaxPoint());
 
-			// And update it with fresh triangles
-			Triangle_dt adjacentValidTriangle = findValidTriangle(minInvalidCell);
-			updateCellValues(minInvalidCell.x, minInvalidCell.y, maxInvalidCell.x, maxInvalidCell.y, adjacentValidTriangle);
-		}
-	}
+	    // And update it with fresh triangles
+	    Triangle_dt adjacentValidTriangle = findValidTriangle(minInvalidCell);
+	    updateCellValues(minInvalidCell.x, minInvalidCell.y, maxInvalidCell.x, maxInvalidCell.y, adjacentValidTriangle);
+	   }
+	  }
 
 	private void updateCellValues(int startXCell, int startYCell, int lastXCell, int lastYCell, Triangle_dt startTriangle)
 	{

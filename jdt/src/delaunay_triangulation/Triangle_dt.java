@@ -91,18 +91,18 @@ public class Triangle_dt {
 	 * returns the consecutive triangle which shares this triangle p3,p1 edge. 
 	 */
 	public Triangle_dt next_31() {return this.canext;} 
-
-	/**
-	 * @return  The bounding rectange between the minimum and maximum coordinates
-	 *                of the triangle
-	 */
-	public BoundingBox getBoundingBox() {
-		Point_dt lowerLeft, upperRight;
-		lowerLeft = new Point_dt(Math.min(a.x(), Math.min(b.x(), c.x())), Math.min(a.y(), Math.min(b.y(), c.y())));
-		upperRight = new Point_dt(Math.max(a.x(), Math.max(b.x(), c.x())), 	Math.max(a.y(), Math.max(b.y(), c.y())));
-		return new BoundingBox(lowerLeft, upperRight);
-	}
-
+	
+     /**
+      * @return  The bounding rectange between the minimum and maximum coordinates
+      *                of the triangle
+      */
+     public BoundingBox getBoundingBox() {
+      Point_dt lowerLeft, upperRight;
+      lowerLeft = new Point_dt(Math.min(a.x(), Math.min(b.x(), c.x())), Math.min(a.y(), Math.min(b.y(), c.y())));
+      upperRight = new Point_dt(Math.max(a.x(), Math.max(b.x(), c.x())),  Math.max(a.y(), Math.max(b.y(), c.y())));
+      return new BoundingBox(lowerLeft, upperRight);
+     }
+    
   void switchneighbors( Triangle_dt Old,Triangle_dt New ) {
     if ( abnext==Old ) abnext=New;
     else if ( bcnext==Old ) bcnext=New;
@@ -116,6 +116,42 @@ public class Triangle_dt {
     if ( c==p ) return bcnext;
     System.out.println( "Error, neighbors can't find p: "+p );
     return null;
+  }
+  
+  /**
+   * Returns the neighbors that shares the given corner and is not the previous triangle.
+   * @param p The given corner
+   * @param prevTriangle The previous triangle.
+   * @return The neighbors that shares the given corner and is not the previous triangle.
+   * 
+   * By: Eyal Roth & Doron Ganel.
+   */
+  Triangle_dt nextNeighbor(Point_dt p, Triangle_dt prevTriangle) {
+	  Triangle_dt neighbor = null;
+	  
+	  if (a.equals(p)) {
+		  neighbor =  canext;
+	  }
+	  if (b.equals(p)) {
+		  neighbor = abnext;
+	  }
+	  if (c.equals(p)) {
+		  neighbor = bcnext;
+	  }
+	  
+	  if (neighbor.equals(prevTriangle)) {
+		  if (a.equals(p)) {
+			  neighbor =  abnext;
+		  }
+		  if (b.equals(p)) {
+			  neighbor = bcnext;
+		  }
+		  if (c.equals(p)) {
+			  neighbor = canext;
+		  }	  
+	  }
+	  
+	  return neighbor;
   }
 
   Circle_dt circumcircle() {
@@ -156,7 +192,10 @@ public class Triangle_dt {
 	boolean ans = false;
 	if(this.halfplane | p== null) return false;
 	
-    if((p.x==a.x& p.y==a.y) | (p.x==b.x& p.y==b.y)| (p.x==c.x& p.y==c.y)) return true;
+    if (isCorner(p)) {
+    	return true;
+    }
+    
     int a12 = p.pointLineTest(a,b);
     int a23 = p.pointLineTest(b,c);
     int a31 = p.pointLineTest(c,a);
@@ -167,7 +206,40 @@ public class Triangle_dt {
 	ans = true;
 
 	return ans;
-    }
+  }
+  
+  /**
+   * Checks if the given point is a corner of this triangle.
+   * @param p The given point.
+   * @return True iff the given point is a corner of this triangle.
+   * 
+   * By Eyal Roth & Doron Ganel.
+   */
+  public boolean isCorner(Point_dt p) {
+	  return (p.x == a.x & p.y == a.y) | (p.x == b.x & p.y == b.y)| (p.x == c.x & p.y == c.y);
+  }
+  
+
+	//Doron
+	public boolean fallInsideCircumcircle(Point_dt[] arrayPoints)
+	{	
+		boolean isInside = false; 
+		Point_dt p1 = this.p1();
+		Point_dt p2 = this.p2();
+		Point_dt p3 = this.p3();
+		int i = 0;
+		while(!isInside && i<arrayPoints.length)
+		{
+			Point_dt p = arrayPoints[i];
+			if(!p.equals(p1)&& !p.equals(p2) && !p.equals(p3))
+			{
+				isInside = this.circumcircle_contains(p);
+			}
+			i++;
+		}
+		
+		return isInside;
+	}
   
   /**
    * compute the Z value for the X,Y values of q. <br />
