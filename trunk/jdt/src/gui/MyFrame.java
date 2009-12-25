@@ -1,15 +1,29 @@
 package gui;
 
-import algorithms.topographic_map.CounterLine;
-import delaunay_triangulation.Delaunay_Triangulation;
-import delaunay_triangulation.Point_dt;
-import delaunay_triangulation.Triangle_dt;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
+
+import algorithms.topographic_map.CounterLine;
+
+import delaunay_triangulation.Delaunay_Triangulation;
+import delaunay_triangulation.Point_dt;
+import delaunay_triangulation.Triangle_dt;
 
 /**
  * GUI class to test the delaunay_triangulation Triangulation package:
@@ -22,12 +36,11 @@ class MyFrame extends Frame implements ActionListener {
 		win.start();
 	}
 
-	private static final int INDEX_SIZE = 13;
 	private static final long serialVersionUID = 1L;
 	// *** private data ***
 	public static final int POINT = 1, FIND = 2, VIEW1 = 3, VIEW2 = 4,
 			VIEW3 = 5, VIEW4 = 6, SECTION1 = 7, SECTION2 = 8, GUARD = 9,
-			CLIENT = 10;
+			CLIENT = 10,DELETE = 11;
 	private int _stage, _view_flag = VIEW1, _mc = 0;
 	private Triangle_dt _t1, _t2; // tmp triangle for find testing for selection
 	private Delaunay_Triangulation _ajd = null;
@@ -389,6 +402,13 @@ class MyFrame extends Frame implements ActionListener {
 		m.add(m3);
 
 		mbar.add(m);
+		
+		m = new Menu("Functions");
+		MenuItem m5 = new MenuItem("Delete");
+		m5.addActionListener(this);
+		m.add(m5);
+		mbar.add(m);
+		
 
 		m = new Menu("View");
 		m3 = new MenuItem("Lines");
@@ -482,6 +502,10 @@ class MyFrame extends Frame implements ActionListener {
 			System.out.println(ans);
 			System.out.println();
 		}
+		else if (arg.equals("Delete"))
+		{
+			_stage = DELETE;
+		}
 
 	}
 
@@ -504,10 +528,6 @@ class MyFrame extends Frame implements ActionListener {
 						.maxBoundingBox().x());
 				_dy_map = new Point_dt(_ajd.minBoundingBox().y(), _ajd
 						.maxBoundingBox().y());
-
-				// compute grid index
-				_ajd.IndexData(INDEX_SIZE, INDEX_SIZE);
-				
 				repaint();
 			} catch (Exception e) { // in case something went wrong.
 				System.out.println("** Error while reading text file **");
@@ -574,6 +594,19 @@ class MyFrame extends Frame implements ActionListener {
 				Point_dt q = new Point_dt(xx, yy);
 				Point_dt p = screen2world(q);
 				_ajd.insertPoint(p);
+				repaint();
+				break;
+			}
+			case (DELETE):{
+				Point_dt q = new Point_dt(xx, yy);
+                                //finds 
+                                Point_dt p = screen2world(q);
+                                Point_dt pointToDelete = _ajd.findClosePoint(p);
+                                if(pointToDelete==null) {
+                                    System.err.println("Error : the point doesn't exists");
+                                    return;
+                                }
+				_ajd.deletePoint(pointToDelete);
 				repaint();
 				break;
 			}
