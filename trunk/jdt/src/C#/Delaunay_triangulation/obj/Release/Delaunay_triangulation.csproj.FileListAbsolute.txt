@@ -1,1 +1,0 @@
-C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\jdt\jdt\src\C#\Delaunay_triangulation\obj\Release\ResolveAssemblyReference.cache
