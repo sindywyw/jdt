@@ -652,6 +652,111 @@ public class Delaunay_Triangulation {
 	}
 
 	/**
+	 * Calculates a Voronoi cell for a given neighborhood
+	 * in this triangulation. A neighborhood is defined by a triangle
+	 * and one of its corner points.
+	 *  
+	 * By Udi Schneider
+	 * 
+	 * @param triangle a triangle in the neighborhood  
+	 * @param p corner point whose surrounding neighbors will be checked
+	 * @return set of Points representing the cell polygon
+	 */
+	public Point_dt[] calcVoronoiCell(Triangle_dt triangle, Point_dt p)
+	{	
+		// handle any full triangle		 
+		if (!triangle.isHalfplane()) {
+			
+			// get all neighbors of given corner point
+			Vector<Triangle_dt> neighbors = findTriangleNeighborhood(triangle, p);
+						
+			Iterator<Triangle_dt> itn = neighbors.iterator();
+			Point_dt[] vertices = new Point_dt[neighbors.size()];
+			
+			// for each neighbor, including the given triangle, add
+			// center of circumscribed circle to cell polygon
+			int index = 0;
+			while (itn.hasNext()) {
+				Triangle_dt tmp = itn.next();									
+				vertices[index++] = tmp.circumcircle().Center();				
+			}			
+			
+			return vertices;
+		}
+		
+		// handle half plane
+		// in this case, the cell is a single line
+		// which is the perpendicular bisector of the half plane line
+		else {
+			// local friendly alias			
+			Triangle_dt halfplane = triangle;
+			// third point of triangle adjacent to this half plane
+			// (the point not shared with the half plane)
+			Point_dt third = null;
+			// triangle adjacent to the half plane
+			Triangle_dt neighbor = null;
+			
+			// find the neighbor triangle
+			if (!halfplane.next_12().isHalfplane())
+			{
+				neighbor = halfplane.next_12();				
+			}
+			else if (!halfplane.next_23().isHalfplane())
+			{
+				neighbor = halfplane.next_23();				
+			}
+			else if (!halfplane.next_23().isHalfplane())
+			{
+				neighbor = halfplane.next_31();				
+			}
+				
+			// find third point of neighbor triangle
+			// (the one which is not shared with current half plane)
+			// this is used in determining half plane orientation
+			if (!neighbor.p1().equals(halfplane.p1()) && !neighbor.p1().equals(halfplane.p2()) ) 
+				third = neighbor.p1();  
+			if (!neighbor.p2().equals(halfplane.p1()) && !neighbor.p2().equals(halfplane.p2()) ) 
+				third = neighbor.p2();
+			if (!neighbor.p3().equals(halfplane.p1()) && !neighbor.p3().equals(halfplane.p2()) ) 
+				third = neighbor.p3();
+						
+			// delta (slope) of half plane edge
+			double halfplane_delta = (halfplane.p1().y() - halfplane.p2().y()) /
+							(halfplane.p1().x() - halfplane.p2().x());
+			
+			// delta of line perpendicular to current half plane edge
+			double perp_delta = (1.0 / halfplane_delta) * (-1.0);
+		 
+			// determine orientation: find if the third point of the triangle
+			// lies above or below the half plane
+			// works by finding the matching y value on the half plane line equation
+			// for the same x value as the third point
+			double y_orient =  halfplane_delta * (third.x() - halfplane.p1().x()) + halfplane.p1().y();
+			boolean above = true;
+			if (y_orient > third.y())
+				above = false;
+			
+			// based on orientation, determine cell line direction
+			// (towards right or left side of window)
+			double sign = 1.0;
+			if ((perp_delta < 0 && !above) || (perp_delta > 0 && above))
+				sign = -1.0;
+						
+			// the cell line is a line originating from the circumcircle to infinity
+			// x = 500.0 is used as a large enough value
+			Point_dt circumcircle = neighbor.circumcircle().Center();
+			double x_cell_line = (circumcircle.x() + (500.0 * sign));			
+			double y_cell_line = perp_delta * (x_cell_line - circumcircle.x()) + circumcircle.y();
+			
+			Point_dt[] result = new Point_dt[2];
+			result[0] = circumcircle;
+			result[1] = new Point_dt(x_cell_line, y_cell_line);
+						
+			return result;
+		}
+	}
+	
+	/**
 	 * returns an iterator object involved in the last update.
 	 * @return iterator to all triangles involved in the last update of the
 	 *         triangulation NOTE: works ONLY if the are triangles (it there is
@@ -1278,7 +1383,8 @@ public class Delaunay_Triangulation {
 	
 	// Walks on a consistent side of triangles until a cycle is achieved.
 	//By Doron Ganel & Eyal Roth
-	private Vector<Triangle_dt> findTriangleNeighborhood(Triangle_dt firstTriangle, Point_dt point) {
+    // changed to public by Udi
+	public Vector<Triangle_dt> findTriangleNeighborhood(Triangle_dt firstTriangle, Point_dt point) {
 		Vector<Triangle_dt> triangles = new Vector<Triangle_dt>(30);
 		triangles.add(firstTriangle);
 		
@@ -1298,8 +1404,8 @@ public class Delaunay_Triangulation {
 		}
 		
 		return triangles;
-	}
-		
+	}	
+	
 	/*
 	 * find triangle to be added to the triangulation
 	 * 
