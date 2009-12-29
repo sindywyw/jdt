@@ -38,7 +38,7 @@ class MyFrame extends Frame implements ActionListener {
 	// *** private data ***
 	public static final int POINT = 1, FIND = 2, VIEW1 = 3, VIEW2 = 4,
 			VIEW3 = 5, VIEW4 = 6, SECTION1 = 7, SECTION2 = 8, GUARD = 9,
-			CLIENT = 10;
+			CLIENT = 10, VORONOI = 12;
 	private int _stage, _view_flag = VIEW1, _mc = 0;
 	private Triangle_dt _t1, _t2; // tmp triangle for find testing for selection
 	private Delaunay_Triangulation _ajd = null;
@@ -99,13 +99,13 @@ class MyFrame extends Frame implements ActionListener {
 		Iterator<Triangle_dt> it = _ajd.trianglesIterator();
 		while (it.hasNext()) {
 			curr = it.next();
-			if (!curr.isHalfplane())
+			if (!curr.isHalfplane() && _view_flag != VORONOI)
 				drawTriangle(g, curr, null);
 		}
 		it = _ajd.trianglesIterator();
 		while (it.hasNext()) {
 			curr = it.next();
-			if (curr.isHalfplane())
+			if (curr.isHalfplane() && _view_flag != VORONOI)
 				drawTriangle(g, curr, null);
 		}
 		if (_t2 != null)
@@ -116,7 +116,7 @@ class MyFrame extends Frame implements ActionListener {
 			drawTopo(g);
 
 		// debug
-		if (_mc < _ajd.getModeCounter()) {
+		if (_mc < _ajd.getModeCounter() && _view_flag != VORONOI) {
 			_mc = _ajd.getModeCounter();
 			int i = 0;
 			for (Iterator<Triangle_dt> it2 = _ajd.getLastUpdatedTriangles(); it2
@@ -142,7 +142,7 @@ class MyFrame extends Frame implements ActionListener {
 			int i = 0;
 			while (pit.hasNext()) {
 				Point_dt curr_p = pit.next();
-				if (curr_p != null) {
+				if (curr_p != null && _view_flag != VORONOI) {
 					drawPoint(g, curr_p, Color.BLUE);
 					System.out.println(i + ") " + curr_p + "  dist _p1: "
 							+ _p1.distance(curr_p));
@@ -187,10 +187,62 @@ class MyFrame extends Frame implements ActionListener {
 			if (c1 > 0)
 				System.out.println("clients:" + ccc.length + "  visible c:"
 						+ c1 + "   ave:" + c2 / c1);
-		}		
+		}	
+		if (_view_flag == VORONOI)
+			drawVoronoi(g);
 
 	}
 
+	/**
+	 * Draws Voronoi diagram based on current triangulation
+	 * A Voronoi diagram can be created from a Delaunay triangulation by
+	 * connecting the circumcenters of neighboring triangles
+	 * 
+	 * By Udi Schneider
+	 * 
+	 * @param g Graphics object
+	 */
+	void drawVoronoi(Graphics g)
+	{
+		Iterator<Triangle_dt> it = _ajd.trianglesIterator();
+		
+		while (it.hasNext()) {
+			Triangle_dt curr = it.next();
+			Color temp = g.getColor();
+            g.setColor(Color.BLACK);
+            
+            // For a half plane, only one corner is needed
+			if (curr.isHalfplane())
+			{
+				try {
+					drawPolygon(g, _ajd.calcVoronoiCell(curr, curr.p1()));
+				} catch (NullPointerException e) {}
+			}
+			// for a full triangle, check every corner
+			else
+			{
+				// if a triangle has no neighbors, a null exception will be caught
+				// and no action taken.
+				// this is expected, for example when there is only one triangle
+				// at the start of the user input
+				try {
+					drawPolygon(g, _ajd.calcVoronoiCell(curr, curr.p1()));
+				} catch (NullPointerException e) {}
+				try {
+					drawPolygon(g, _ajd.calcVoronoiCell(curr, curr.p2()));
+				} catch (NullPointerException e) {}
+				try {
+					drawPolygon(g, _ajd.calcVoronoiCell(curr, curr.p3()));
+				} catch (NullPointerException e) {}
+				
+				drawPoint(g, curr.p1(), Color.RED);
+				drawPoint(g, curr.p2(), Color.RED);
+				drawPoint(g, curr.p3(), Color.RED);
+			}
+			g.setColor(temp);
+		}
+	}
+	
 	void drawTopo(Graphics g) {
 		Triangle_dt curr = null;
 		Iterator<Triangle_dt> it = _ajd.trianglesIterator();
@@ -315,6 +367,23 @@ class MyFrame extends Frame implements ActionListener {
 		}
 	}
 
+	/**
+	 * Draws a polygon represented by Point_dt points
+	 * 
+	 * By Udi Schneider 
+	 */
+	public void drawPolygon(Graphics g, Point_dt[] polygon)
+	{
+		int[] x = new int[polygon.length];
+        int[] y = new int[polygon.length];
+        for (int i = 0; i < polygon.length; i++) {
+        	polygon[i] = this.world2screen(polygon[i]);
+            x[i] = (int) polygon[i].x();
+            y[i] = (int) polygon[i].y();
+        }
+        g.drawPolygon(x, y, polygon.length);
+	}
+	
 	public void drawLine(Graphics g, Point_dt p1, Point_dt p2) {
 		// g.drawLine((int)p1.x(), (int)p1.y(), (int)p2.x(), (int)p2.y());
 		Point_dt t1 = this.world2screen(p1);
@@ -401,6 +470,10 @@ class MyFrame extends Frame implements ActionListener {
 		m4.addActionListener(this);
 		m.add(m4);
 		mbar.add(m);
+		m4 = new MenuItem("Voronoi");
+		m4.addActionListener(this);
+		m.add(m4);
+		mbar.add(m);
 
 		setMenuBar(mbar);
 		this.addMouseListener(new mouseManeger());
@@ -469,6 +542,10 @@ class MyFrame extends Frame implements ActionListener {
 					+ _ajd.maxBoundingBox();
 			System.out.println(ans);
 			System.out.println();
+		} else if (arg.equals("Voronoi"))
+		{
+			_view_flag = VORONOI;
+			repaint();
 		}
 
 	}
