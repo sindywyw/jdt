@@ -1344,6 +1344,12 @@ public class Delaunay_Triangulation {
                                     if(!t.fallInsideCircumcircle(arrayPoints))
                                             return t;
                                 }
+                                //if there are only 4 points use contains that refers to point
+                                //on boundary as outside
+                                if(size==4&&(calcDet(p1, p2, p3) >= 0) && !t.contains_BoundaryIsOutside(p)){                                                       
+                                    if(!t.fallInsideCircumcircle(arrayPoints))
+                                            return t;
+                                }
                         }                        
 		}
 		return null;
