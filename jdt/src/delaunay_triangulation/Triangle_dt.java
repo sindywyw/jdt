@@ -125,7 +125,7 @@ public class Triangle_dt {
    * @return The neighbors that shares the given corner and is not the previous triangle.
    * 
    * By: Eyal Roth & Doron Ganel.
-   */
+   */  
   Triangle_dt nextNeighbor(Point_dt p, Triangle_dt prevTriangle) {
 	  Triangle_dt neighbor = null;
 	  
@@ -138,8 +138,10 @@ public class Triangle_dt {
 	  if (c.equals(p)) {
 		  neighbor = bcnext;
 	  }
-	  
-	  if (neighbor.equals(prevTriangle)) {
+		
+	  // Udi Schneider: Added a condition check for isHalfPlane. If the current
+	  // neighbor is a half plane, we also want to move to the next neighbor	  
+	  if (neighbor.equals(prevTriangle) || neighbor.isHalfplane()) {
 		  if (a.equals(p)) {
 			  neighbor =  abnext;
 		  }
@@ -153,7 +155,7 @@ public class Triangle_dt {
 	  
 	  return neighbor;
   }
-
+  
   Circle_dt circumcircle() {
 
     double u = ((a.x-b.x)*(a.x+b.x) + (a.y-b.y)*(a.y+b.y)) / 2.0f;
