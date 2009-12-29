@@ -209,6 +209,30 @@ public class Triangle_dt {
   }
   
   /**
+   * determinates if this triangle contains the point p.
+   * @param p the query point
+   *  @return true iff p is not null and is inside this triangle (Note: on boundary is considered outside!!).
+   */
+  public boolean contains_BoundaryIsOutside(Point_dt p) {
+      boolean ans = false;
+      if(this.halfplane | p== null) return false;
+      
+      if (isCorner(p)) {
+    	  return true;
+      }
+  
+	  int a12 = p.pointLineTest(a,b);
+	  int a23 = p.pointLineTest(b,c);
+	  int a31 = p.pointLineTest(c,a);
+  
+	  if ((a12 == Point_dt.LEFT && a23 == Point_dt.LEFT && a31 == Point_dt.LEFT ) ||
+			  (a12 == Point_dt.RIGHT && a23 == Point_dt.RIGHT && a31 == Point_dt.RIGHT ))
+		  ans = true;
+
+      return ans;
+  }
+  
+  /**
    * Checks if the given point is a corner of this triangle.
    * @param p The given point.
    * @return True iff the given point is a corner of this triangle.
