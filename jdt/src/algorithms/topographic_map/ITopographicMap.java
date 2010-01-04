@@ -19,9 +19,8 @@ public interface ITopographicMap {
 	 * @param triangles - a list of triangles that was created by Delaunay triangulation algorithm.
 	 * @param heightDelta - each counter line will be in the height x*heightDelta
 	 * @return a list of counters lines. Each counter line is in the height of x*heightDelta
-	 * @throws Exception
 	 * @see CounterLine
 	 * @see Triangle_dt
 	 */
-	public ArrayList<CounterLine> createTopographicMap(Iterator<Triangle_dt> triangles, int heightDelta) throws Exception;
+	public ArrayList<CounterLine> createCounterLines(Iterator<Triangle_dt> triangles, int heightDelta);
 }

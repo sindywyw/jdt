@@ -37,13 +37,13 @@ public class TopographicMap implements ITopographicMap {
 	 * <br>
 	 * @param triangles
 	 * @param heightDelta
-	 * @see ITopographicMap#createTopographicMap(Iterator, int)
+	 * @see ITopographicMap#createCounterLines(Iterator, int)
 	 * @see Triangle_dt
 	 * @see CounterLine
 	 */
 	@Override
-	public ArrayList<CounterLine> createTopographicMap(
-			Iterator<Triangle_dt> triangles, int heightDelta) throws Exception {
+	public ArrayList<CounterLine> createCounterLines(
+			Iterator<Triangle_dt> triangles, int heightDelta){
 		try{
 			ArrayList<CounterLine> counterLines = new ArrayList<CounterLine>();
 			ArrayList<Line_tp> lines = new ArrayList<Line_tp>();
@@ -84,8 +84,9 @@ public class TopographicMap implements ITopographicMap {
 			return counterLines;
 		}
 		catch(Exception e){
+			System.out.println("Error. Can't calculate topography map counter line for the triangulation");
 			e.printStackTrace();
-			throw e;
+			return null;
 
 		}
 	}

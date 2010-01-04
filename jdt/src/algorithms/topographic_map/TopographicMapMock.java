@@ -16,11 +16,11 @@ public class TopographicMapMock implements ITopographicMap{
 	/** 
 	 * Mock implementation
 	 * @return an empty list of counter lines.
-	 * @see ITopographicMap#createTopographicMap(java.util.Iterator, int)
+	 * @see ITopographicMap#createCounterLines(java.util.Iterator, int)
 	 */
 	@Override
-	public ArrayList<CounterLine> createTopographicMap(
-			Iterator<Triangle_dt> triangles, int height) throws Exception {
+	public ArrayList<CounterLine> createCounterLines(
+			Iterator<Triangle_dt> triangles, int height){
 		return new ArrayList<CounterLine>();
 	}
 
