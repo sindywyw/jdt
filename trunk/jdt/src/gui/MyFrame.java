@@ -20,6 +20,8 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import algorithms.topographic_map.CounterLine;
+import algorithms.topographic_map.ITopographicMap;
+import algorithms.topographic_map.TopographicMapFactory;
 import delaunay_triangulation.Circle_dt;
 import delaunay_triangulation.Delaunay_Triangulation;
 import delaunay_triangulation.Point_dt;
@@ -44,11 +46,14 @@ class MyFrame extends Frame implements ActionListener {
 	private int _stage, _view_flag = VIEW1, _mc = 0;
 	private Triangle_dt _t1, _t2; // tmp triangle for find testing for selection
 	private Delaunay_Triangulation _ajd = null;
+	private ITopographicMap _topoCreator;
+	private ArrayList<CounterLine> _curTopoMap;
 	protected Vector<Point_dt> _clients, _guards;
 	protected Point_dt _dx_f, _dy_f, _dx_map, _dy_map, _p1, _p2;// ,_guard=null,
 																// _client=null;
 	protected boolean _visible = false;
-	private double _topo_dz = 100.0, GH = 30, CH = 5;
+	private double GH = 30, CH = 5;
+	private int _topo_dz = 100; 
 	// private Vector<Triangle_dt> _tr = null;//new Vector<Triangle_dt>();
 	private Visibility _los;// , _section2;
 
@@ -58,6 +63,7 @@ class MyFrame extends Frame implements ActionListener {
 		this.setSize(500, 500);
 		_stage = 0;
 		_ajd = new Delaunay_Triangulation();
+		_topoCreator = TopographicMapFactory.createTopographicMap();
 
 		_dx_f = new Point_dt(10, this.getWidth() - 10);
 		_dy_f = new Point_dt(55, this.getHeight() - 10);
@@ -115,7 +121,7 @@ class MyFrame extends Frame implements ActionListener {
 		if (_t1 != null && _stage == FIND)
 			drawTriangle(g, _t1, Color.green);
 		if (this._view_flag == VIEW3)
-			drawTopo(g);
+			drawTopographicMap(g,_curTopoMap);
 
 		// debug
 		if (_mc < _ajd.getModeCounter() && _view_flag != VORONOI) {
@@ -245,103 +251,28 @@ class MyFrame extends Frame implements ActionListener {
 			g.setColor(temp);
 		}
 	}
-	
-	void drawTopo(Graphics g) {
-		Triangle_dt curr = null;
-		Iterator<Triangle_dt> it = _ajd.trianglesIterator();
-		g.setColor(Color.red);
-		while (it.hasNext()) {
-			curr = it.next();
-			if (!curr.isHalfplane())
-				drawTriangleTopoLines(g, curr, this._topo_dz, null);
-		}
-	}
 
-	void drawTriangleTopoLines(Graphics g, Triangle_dt t, double dz, Color cl) {
-		if (t.p1().z() < 0 | t.p2().z() < 0 | t.p3().z() < 0)
-			return;
-		Point_dt[] p12 = computePoints(t.p1(), t.p2(), dz);
-		Point_dt[] p23 = computePoints(t.p2(), t.p3(), dz);
-		Point_dt[] p31 = computePoints(t.p3(), t.p1(), dz);
-
-		int i12 = 0, i23 = 0, i31 = 0;
-		boolean cont = true;
-		while (cont) {
-			cont = false;
-			if (i12 < p12.length && i23 < p23.length
-					&& p12[i12].z() == p23[i23].z()) {
-				g.setColor(Color.YELLOW);
-				if (p12[i12].z() % 200 > 100)
-					g.setColor(Color.red);
-				drawLine(g, p12[i12], p23[i23]);
-				i12++;
-				i23++;
-				cont = true;
-			}
-			if (i23 < p23.length && i31 < p31.length
-					&& p23[i23].z() == p31[i31].z()) {
-				g.setColor(Color.YELLOW);
-				if (p23[i23].z() % 200 > 100)
-					g.setColor(Color.red);
-				drawLine(g, p23[i23], p31[i31]);
-				i23++;
-				i31++;
-				cont = true;
-			}
-			if (i12 < p12.length && i31 < p31.length
-					&& p12[i12].z() == p31[i31].z()) {
-				g.setColor(Color.YELLOW);
-				if (p12[i12].z() % 200 > 100)
-					g.setColor(Color.red);
-				drawLine(g, p12[i12], p31[i31]);
-				i12++;
-				i31++;
-				cont = true;
-			}
-		}
-	}
-
-	Point_dt[] computePoints(Point_dt p1, Point_dt p2, double dz) {
-		Point_dt[] ans = new Point_dt[0];
-		double z1 = Math.min(p1.z(), p2.z()), z2 = Math.max(p1.z(), p2.z());
-		if (z1 == z2)
-			return ans;
-		double zz1 = ((int) (z1 / dz)) * dz;
-		if (zz1 < z1)
-			zz1 += dz;
-		double zz2 = ((int) (z2 / dz)) * dz;
-		int len = (int) ((zz2 - zz1) / dz) + 1, i = 0;
-		ans = new Point_dt[len];
-		double DZ = p2.z() - p1.z(), DX = p2.x() - p1.x(), DY = p2.y() - p1.y();
-		for (double z = zz1; z <= zz2; z += dz) {
-			double scale = (z - p1.z()) / DZ;
-			double x = p1.x() + DX * scale;
-			double y = p1.y() + DY * scale;
-			ans[i] = new Point_dt(x, y, z);
-			i++;
-		}
-		return ans;
-	}
-	
 	public void drawTopographicMap(Graphics g,ArrayList<CounterLine> counterLines){
-		g.setColor(Color.YELLOW);
-		for (CounterLine line : counterLines){
-			int[] xPoints = new int[line.getNumberOfPoints()];
-			int[] yPoints = new int[line.getNumberOfPoints()];
-			
-			Iterator<Point_dt> pointsItr = line.getPointsListIterator();
-			int index = 0;
-			while (pointsItr.hasNext()){
-				Point_dt point = pointsItr.next();
-				Point_dt screenPoint = world2screen(point);
-				xPoints[index] = (int) screenPoint.x();
-				yPoints[index]= (int)screenPoint.y();
-				index++;
+		if(counterLines != null){
+			g.setColor(Color.YELLOW);
+			for (CounterLine line : counterLines){
+				int[] xPoints = new int[line.getNumberOfPoints()];
+				int[] yPoints = new int[line.getNumberOfPoints()];
+
+				Iterator<Point_dt> pointsItr = line.getPointsListIterator();
+				int index = 0;
+				while (pointsItr.hasNext()){
+					Point_dt point = pointsItr.next();
+					Point_dt screenPoint = world2screen(point);
+					xPoints[index] = (int) screenPoint.x();
+					yPoints[index]= (int)screenPoint.y();
+					index++;
+				}
+				if(line.isClosed())
+					g.drawPolygon(xPoints,yPoints,xPoints.length);
+				else
+					g.drawPolyline(xPoints, yPoints, xPoints.length);	
 			}
-			if(line.isClosed())
-				g.drawPolygon(xPoints,yPoints,xPoints.length);
-			else
-				g.drawPolyline(xPoints, yPoints, xPoints.length);	
 		}
 	}
 
@@ -476,9 +407,11 @@ class MyFrame extends Frame implements ActionListener {
 		MenuItem m5 = new MenuItem("Delete");
 		m5.addActionListener(this);
 		m.add(m5);
+		m5 = new MenuItem("Update Topo");
+		m5.addActionListener(this);
+		m.add(m5);
 		mbar.add(m);
 		
-
 		m = new Menu("View");
 		m3 = new MenuItem("Lines");
 		m3.addActionListener(this);
@@ -579,8 +512,12 @@ class MyFrame extends Frame implements ActionListener {
 		} else if (arg.equals("Voronoi")){
 			_view_flag = VORONOI;
 			repaint();
+		} else if(arg.equals("Update Topo")){
+			_curTopoMap = 
+				_topoCreator.createCounterLines(_ajd.trianglesIterator(), _topo_dz);
+			_view_flag = VIEW3;
+			repaint();
 		}
-
 	}
 
 	// *** private methodes - random points obs ****
@@ -602,6 +539,8 @@ class MyFrame extends Frame implements ActionListener {
 						.maxBoundingBox().x());
 				_dy_map = new Point_dt(_ajd.minBoundingBox().y(), _ajd
 						.maxBoundingBox().y());
+				_curTopoMap = 
+					_topoCreator.createCounterLines(_ajd.trianglesIterator(), _topo_dz);
 				repaint();
 			} catch (Exception e) { // in case something went wrong.
 				System.out.println("** Error while reading text file **");

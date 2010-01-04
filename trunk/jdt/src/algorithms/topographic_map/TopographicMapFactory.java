@@ -11,7 +11,7 @@ public class TopographicMapFactory {
 	
 	/**
 	 * Creates a new {@link ITopographicMap}
-	 * @return The concrete ITopographicMap ({@link TopographicMapMock})
+	 * @return The concrete ITopographicMap ({@link TopographicMap})
 	 */
 	public static ITopographicMap createTopographicMap(){
 		return new TopographicMap();
