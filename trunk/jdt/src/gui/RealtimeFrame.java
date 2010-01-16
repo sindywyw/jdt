@@ -8,6 +8,8 @@ import java.awt.FileDialog;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Menu;
 import java.awt.MenuBar;
@@ -258,20 +260,17 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 	private void addPanelsAndButtons() {
 		JPanel pnlOriginalAndSimplifiedFrames = new JPanel(new GridLayout(1, 2));
 		JPanel pnlFrames = new JPanel();
-		JPanel pnlButtons = new JPanel(new FlowLayout());
+		JPanel pnlButtons = new JPanel();
 		
 		m_pnlOriginalFrame = new JPanel();
-		m_pnlOriginalFrame.setSize(new Dimension(300, 300));
 		m_pnlOriginalFrame.add(new JLabel("Original Frame"));
 		m_pnlOriginalFrame.setBorder(BorderFactory.createEtchedBorder());
 		
 		m_pnlsimplifiedFrame = new JPanel();
-		m_pnlsimplifiedFrame.setSize(new Dimension(300, 300));
-		m_pnlsimplifiedFrame.add(new JLabel("Simfplified Frame"));
+		m_pnlsimplifiedFrame.add(new JLabel("Simplified Frame"));
 		m_pnlsimplifiedFrame.setBorder(BorderFactory.createEtchedBorder());
 		
 		m_pnlTriangulatedFrame = new JPanel();
-		m_pnlTriangulatedFrame.setSize(new Dimension(300, 300));
 		m_pnlTriangulatedFrame.add(new JLabel("Triangulated Frame"));
 		m_pnlTriangulatedFrame.setBorder(BorderFactory.createEtchedBorder());
 		
@@ -288,11 +287,21 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 		pnlOriginalAndSimplifiedFrames.add(m_pnlOriginalFrame);
 		pnlOriginalAndSimplifiedFrames.add(m_pnlsimplifiedFrame);
 		
-		GridLayout gl = new GridLayout(2, 1);
-		gl.setHgap(100);
-		pnlFrames.setLayout(gl);
-		pnlFrames.add(pnlOriginalAndSimplifiedFrames);
-		pnlFrames.add(m_pnlTriangulatedFrame);
+		pnlFrames.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.ipady = 370; 
+		gbc.weightx = 1.0;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		pnlFrames.add(pnlOriginalAndSimplifiedFrames, gbc);
+		
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weighty = 1.0;
+		gbc.anchor = GridBagConstraints.LAST_LINE_START;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		pnlFrames.add(m_pnlTriangulatedFrame, gbc);
 		
 		pnlButtons.add(m_btnSimplify);
 		pnlButtons.add(m_btnTriangulate);
@@ -337,8 +346,6 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 		GraphicsEnvironment env =
 		     GraphicsEnvironment.getLocalGraphicsEnvironment();
 		   this.setBounds(env.getMaximumWindowBounds());
-		//this.setSize(new Dimension(800, 800));
-
 	}
 	
 	private void startRealtimeTriangulation() {
