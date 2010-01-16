@@ -42,16 +42,40 @@ public class Point_dt {
 	public double x() {
 		return x;
 	};
+	
+	/**
+	 * Sets the x coordinate.
+	 * @param x The new x coordinate.
+	 */
+	public void setX(double x) {
+		this.x = x;
+	}
 
 	/** returns the y-coordinate of this point. */
 	public double y() {
 		return y;
 	};
+	
+	/**
+	 * Sets the y coordinate.
+	 * @param y The new y coordinate.
+	 */
+	public void setY(double y) {
+		this.y = y;
+	}
 
 	/** returns the z-coordinate of this point. */
 	public double z() {
 		return z;
 	};
+	
+	/**
+	 * Sets the z coordinate.
+	 * @param z The new z coordinate.
+	 */
+	public void setZ(double Z) {
+		this.z = z;
+	}
 
 	double distance2(Point_dt p) {
 		return (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y);
@@ -107,23 +131,23 @@ public class Point_dt {
 	// pointLineTest
 	// ===============
 	// simple geometry to make things easy!
-	/** •••••a----+----b•••••• */
+	/** ï¿½ï¿½ï¿½ï¿½ï¿½a----+----bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	public final static int ONSEGMENT = 0;
 
 	/**
 	 * + <br>
-	 * •••••a---------b••••••
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½a---------bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * */
 	public final static int LEFT = 1;
 
 	/**
-	 * •••••a---------b•••••• <br>
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½a---------bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ <br>
 	 * +
 	 * */
 	public final static int RIGHT = 2;
-	/** ••+••a---------b•••••• */
+	/** ï¿½ï¿½+ï¿½ï¿½a---------bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 	public final static int INFRONTOFA = 3;
-	/** ••••••a---------b•••+••• */
+	/** ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½a---------bï¿½ï¿½ï¿½+ï¿½ï¿½ï¿½ */
 	public final static int BEHINDB = 4;
 	public final static int ERROR = 5;
 
