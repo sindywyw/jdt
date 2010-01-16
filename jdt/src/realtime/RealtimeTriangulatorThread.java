@@ -290,17 +290,17 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 		pnlFrames.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.ipady = 370;      //make this component tall
+		gbc.ipady = 370; 
 		gbc.weightx = 1.0;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		pnlFrames.add(pnlOriginalAndSimplifiedFrames, gbc);
 		
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weighty = 1.0;   //request any extra vertical space
-		gbc.anchor = GridBagConstraints.LAST_LINE_START; //bottom of space
-		gbc.gridx = 0;       //aligned with button 2
-		gbc.gridy = 1;       //third row
+		gbc.weighty = 1.0;
+		gbc.anchor = GridBagConstraints.LAST_LINE_START;
+		gbc.gridx = 0;
+		gbc.gridy = 1;
 		pnlFrames.add(m_pnlTriangulatedFrame, gbc);
 		
 		pnlButtons.add(m_btnSimplify);
@@ -346,8 +346,6 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 		GraphicsEnvironment env =
 		     GraphicsEnvironment.getLocalGraphicsEnvironment();
 		   this.setBounds(env.getMaximumWindowBounds());
-		//this.setSize(new Dimension(800, 800));
-
 	}
 	
 	private void startRealtimeTriangulation() {
@@ -432,8 +430,6 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 				
 				m_btnSimplify.setVisible(false);
 				m_btnTriangulate.setVisible(false);
-				
-				System.out.println("Started");
 			}
 		} catch (Exception e) {
 			System.out.println("An error has occurred while resuming: " + e.getMessage());
@@ -530,7 +526,6 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 
 		// Toggle simplifying on/off
 		if (source == m_btnSimplify) {
-			System.out.println("Hello");
 			if (m_shouldSimplify == true) {
 				m_shouldSimplify = false;
 			} else {

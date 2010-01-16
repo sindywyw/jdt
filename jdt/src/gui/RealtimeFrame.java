@@ -423,8 +423,6 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 				
 				m_btnSimplify.setVisible(false);
 				m_btnTriangulate.setVisible(false);
-				
-				System.out.println("Started");
 			}
 		} catch (Exception e) {
 			System.out.println("An error has occurred while resuming: " + e.getMessage());
@@ -521,7 +519,6 @@ public class RealtimeFrame extends JFrame implements ActionListener, Runnable, I
 
 		// Toggle simplifying on/off
 		if (source == m_btnSimplify) {
-			System.out.println("Hello");
 			if (m_shouldSimplify == true) {
 				m_shouldSimplify = false;
 			} else {
