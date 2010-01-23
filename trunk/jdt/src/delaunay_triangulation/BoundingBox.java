@@ -30,6 +30,16 @@ public class BoundingBox
    *  the maximum y-coordinate
    */
   private double maxy;
+  
+  /**
+   *  the minimum z-coordinate
+   */
+  private double minz;
+
+  /**
+   *  the maximum z-coordinate
+   */
+  private double maxz;
 
 	/**
 	 * Creates an empty  bounding box
@@ -48,7 +58,7 @@ public class BoundingBox
 		if(other.isNull())
 			setToNull();
 		else
-			init(other.minx, other.maxx, other.miny, other.maxy);
+			init(other.minx, other.maxx, other.miny, other.maxy, other.minz, other.maxz);
 	}
 
 	/**
@@ -58,9 +68,9 @@ public class BoundingBox
 	 * @param miny      minimum y coordinate
 	 * @param maxy      maximum y coordinate
 	 */
-	public BoundingBox(double minx, double maxx, double miny, double maxy)
+	public BoundingBox(double minx, double maxx, double miny, double maxy, double minz, double maxz)
 	{
-		init(minx,maxx, miny, maxy);
+		init(minx,maxx, miny, maxy, minz, maxz);
 	}
 
 	/**
@@ -70,7 +80,7 @@ public class BoundingBox
 	 */
 	public BoundingBox(Point_dt lowerLeft, Point_dt upperRight)
 	{
-		init(lowerLeft.x, upperRight.x, lowerLeft.y, upperRight.y);
+		init(lowerLeft.x, upperRight.x, lowerLeft.y, upperRight.y, lowerLeft.z, upperRight.z);
 	}
 
    /**
@@ -81,7 +91,7 @@ public class BoundingBox
    *@param  y1  the first y-value
    *@param  y2  the second y-value
    */
-	private void init(double x1, double x2, double y1, double y2)
+	private void init(double x1, double x2, double y1, double y2, double z1, double z2)
 	{
 		if (x1 < x2) {
 			minx = x1;
@@ -98,6 +108,14 @@ public class BoundingBox
 		else {
 			miny = y2;
 			maxy = y1;
+		}
+		if (z1 < z2) {
+			minz = z1;
+			maxz = z2;
+		}
+		else {
+			minz = z2;
+			maxz = z1;
 		}
 	}
 
@@ -157,7 +175,9 @@ public class BoundingBox
 					Math.min(minx, other.minx),
 					Math.max(maxx, other.maxx),
 					Math.min(miny, other.miny),
-					Math.max(maxy, other.maxy));
+					Math.max(maxy, other.maxy),
+					Math.min(minz, other.minz),
+					Math.max(maxz, other.maxz));
 		}
 	}
 
@@ -214,7 +234,7 @@ public class BoundingBox
 	 */
 	public Point_dt getMinPoint()
 	{
-		return new Point_dt(minx, miny);
+		return new Point_dt(minx, miny, minz);
 	}
 
 	/**
@@ -222,6 +242,6 @@ public class BoundingBox
 	 */
 	public Point_dt getMaxPoint()
 	{
-		return new Point_dt(maxx, maxy);
+		return new Point_dt(maxx, maxy, maxz);
 	}
 }
