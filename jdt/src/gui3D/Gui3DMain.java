@@ -23,31 +23,17 @@ import com.sun.org.apache.bcel.internal.generic.DALOAD;
 import delaunay_triangulation.*;
 import delaunay_triangulation.BoundingBox;
 
+/*
+ * Main class used to run the GUI3d
+ */
 public class Gui3DMain extends Applet{
 	
-	Graphics3DEngine _g_engine = null;
-	Gui3DFrame _frame = null;
-	
-	static public Delaunay_Triangulation read3DPointsFromFile(String file_name)
-	{
-		Delaunay_Triangulation delunay_triangluation = null;
-		
-		try 
-		{
-			delunay_triangluation = new Delaunay_Triangulation(file_name);
-		} 
-		catch (Exception e) 
-		{
-			System.out.println("caught exception in read3DPointsFromFile!!");
-			e.printStackTrace();
-		}
-		return delunay_triangluation;		
-	}
-	
 	public Gui3DMain() {
-		Delaunay_Triangulation delaunay = null;
-		_g_engine = new Graphics3DEngine();
-		_frame = new Gui3DFrame(new MainFrame(_g_engine, 512, 512), _g_engine);
+		Delaunay_Triangulation triangulation = new Delaunay_Triangulation();
+		
+		Graphics3DEngine g_engine = new Graphics3DEngine(triangulation);
+		Gui3DFrame frame = new Gui3DFrame(new MainFrame(g_engine, 512, 512), g_engine, triangulation);
+		g_engine.set_gui_frame(frame);
     }
 	
 	public static void main(String[] args) 
