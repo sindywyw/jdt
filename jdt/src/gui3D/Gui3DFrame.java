@@ -31,7 +31,7 @@ public class Gui3DFrame implements ActionListener {
 		
 		_current_dt = dt;
 		
-		_frame.setTitle("Delaunay 3D GUI tester");
+		_frame.setTitle("Delaunay Triangulation 3D");
 		_frame.setSize(512, 512);
 		
 		CreateDialog();
@@ -201,7 +201,7 @@ public class Gui3DFrame implements ActionListener {
 	private void showInfo()
 	{
 		String help_info = "Use the mouse and keyboard buttons to navigate around\n"+
-							"Mouse controls: left click to rotate, right click to translate, middle mouse button to zoom in and out\n"+
+							"Mouse controls: hold and click left mouse button to rotate, right button to translate, middle mouse button to zoom in and out\n"+
 							"Keyboard controls: use the arrow keys to navigate, page-up and down to look up or down\n"+
 							"*********************************************************************************************************\n"+
 							"Use the add/delete point tools to dynamically add points to the triangulation\n"+

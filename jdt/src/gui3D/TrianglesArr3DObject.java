@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Geometry;
+import javax.media.j3d.LineAttributes;
 import javax.media.j3d.PickRay;
 import javax.media.j3d.PointAttributes;
 import javax.media.j3d.PolygonAttributes;
@@ -99,6 +100,9 @@ public class TrianglesArr3DObject extends Shape3D {
 	    
 	    PointAttributes pointatt = new PointAttributes(4, true);
 	    _appearance.setPointAttributes(pointatt);
+	    
+	    LineAttributes lineatt = new LineAttributes(2, LineAttributes.PATTERN_SOLID, false);
+	    _appearance.setLineAttributes(lineatt);
 
 	    return _appearance;
 	}
